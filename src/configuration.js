@@ -9,13 +9,6 @@ ColumnConfiguration = (function () {
                 this.customContent = headerMarkup.customContent;
                 this.attributes = headerMarkup.attributes;
             }
-
-            if (bodyMarkup.asRolesToShow) {
-                if (!this.attributes) {
-                    this.attributes = [];
-                }
-                this.attributes.push({ name: 'as-roles-to-show', value: bodyMarkup.asRolesToShow });
-            }
         }
 
         ColumnConfiguration.prototype.createElement = function () {
@@ -263,14 +256,12 @@ ColumnConfiguration = (function () {
                 sortable = td.attr("at-sortable") !== void 0 || this.isSortable(td.attr("class"));
                 width = this.extractWidth(td.attr("class"));
                 initialSorting = this.getInitialSorting(td);
-                asRolesToShow = td.attr('as-roles-to-show');
                 bodyDefinition.push({
                     attribute: attribute,
                     title: title,
                     sortable: sortable,
                     width: width,
-                    initialSorting: initialSorting,
-                    asRolesToShow: asRolesToShow
+                    initialSorting: initialSorting
                 });
             }
             return bodyDefinition;
