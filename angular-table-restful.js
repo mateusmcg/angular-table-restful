@@ -331,7 +331,8 @@ ColumnConfiguration = (function () {
         }
 
         PaginatedSetup.prototype.compile = function (element) {                        
-            var trackBy = element.attr('track-by') ? 'item.' + element.attr('track-by') : "$index";
+            var trackBy = element.attr('track-by') ? element.attr('track-by') : "id";
+            trackBy = trackBy.startsWith('$') ? trackBy : 'item.' + trackBy;            
             this.setupTr(element, "item in sortedAndPaginatedList track by " + trackBy);
         };
 
