@@ -1,4 +1,4 @@
-angular.module("angular-table").directive("atTable", ["$filter", '$q', '$rootScope', '$compile', function ($filter, $q, $rootScope, $compile) {
+    angular.module("angular-table").directive("atTable", ["$filter", '$q', '$rootScope', '$compile', function ($filter, $q, $rootScope, $compile) {
         return {
             restrict: "AC",
             scope: true,
@@ -12,8 +12,8 @@ angular.module("angular-table").directive("atTable", ["$filter", '$q', '$rootSco
                 } else {
                     trElement.attr('ng-click', 'markSelected(item)');
                 }
-                
-                trElement.attr('ng-class', "{'table-selected-row' : item == selectedIndex}");
+
+                trElement.attr('ng-class', "{'table-selected-row' : item == atConfig.selectedItem}");
 
                 tc = new TableConfiguration(element, attributes);
                 table = new Table(element, tc);
@@ -22,14 +22,13 @@ angular.module("angular-table").directive("atTable", ["$filter", '$q', '$rootSco
                     post: function ($scope, $element, $attributes) {
                         table.post($scope, $element, $attributes, $filter, $q, $rootScope);
 
-                        $scope.selectedIndex = undefined;
                         $scope.markSelected = function (item) {
-                            if ($scope.selectedIndex != item) {
-                                $scope.selectedIndex = item;
+                            if (this.atConfig.selectedItem != item) {
+                                this.atConfig.selectedItem = item;
                                 return;
                             }
 
-                            $scope.selectedIndex = undefined;
+                            this.atConfig.selectedItem = undefined;
                         };
 
                         if ($attributes.atScroll != undefined) {
