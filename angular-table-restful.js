@@ -103,10 +103,10 @@
                 sortList: [],
                 predicates: [],
                 numberOfPages: 1,
-                numberOfPagesToShow: 10,
+                numberOfPagesToShow: 5, // ToDo: criar attr pra redefinir
                 getLastPage: function () {
-                    //Caso todas as páginas estiverem ocupadas, significa que o próxima item que entrar estará na próxima página.
-                    if (scope.sortedAndPaginatedList.totalCount > 0 && scope.sortedAndPaginatedList.totalCount % itemsPerPage == 0)
+                    //Caso todas as páginas estiverem ocupadas, significa que o próximo item que entrar estará na próxima página.
+                    if (scope.sortedAndPaginatedList.totalCount % itemsPerPage == 0)
                         return this.numberOfPages + 1;
 
                     return this.numberOfPages;
@@ -212,9 +212,10 @@
         };
 
         ScopeConfigWrapper.prototype.keepItemSelected = function () {
-            var selectedItem = this.atConfig.selectedItem;
+            var selectedItem = this.atConfig ? this.atConfig.selectedItem : undefined;
             if (selectedItem) {
                 angular.forEach(this.getList(), function (item, index) {
+                    //ToDo: Alterar condição para comparar todos os atributos do selectedItem.
                     if (item.id && selectedItem.id && item.id == selectedItem.id)
                         selectedItem = item;
                 })
@@ -289,6 +290,7 @@
                     customContent: th.html(),
                     attributes: th[0].attributes
                 };
+                th.remove();
             }
             return customHeaderMarkups;
         };
@@ -603,7 +605,10 @@
 
         Table.prototype.constructHeader = function () {
             var i, tr, _i, _len, _ref;
-            tr = angular.element(document.createElement("tr"));
+            tr = this.element.find("thead > tr");
+            if (tr.length == 0) {
+                tr = angular.element(document.createElement("tr"));
+            }
             _ref = this.tableConfiguration.columnConfigurations;
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
                 i = _ref[_i];
@@ -619,7 +624,10 @@
                 thead = $('<thead></thead>')
                 this.element.prepend(thead);
             }
-            header = this.constructHeader();
+
+            if (!thead.is('[at-ignore]')) {
+                header = this.constructHeader();
+            }
 
             if (!this.element.hasClass('table')) {
                 this.element.addClass("table table-bordered table-striped table-responsive table-hover");
