@@ -290,7 +290,7 @@
                     customContent: th.html(),
                     attributes: th[0].attributes
                 };
-                th.remove();
+                //th.remove();
             }
             return customHeaderMarkups;
         };
