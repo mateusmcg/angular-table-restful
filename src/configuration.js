@@ -86,7 +86,7 @@
                 numberOfPagesToShow: 10,
                 getLastPage: function () {
                     //Caso todas as páginas estiverem ocupadas, significa que o próxima item que entrar estará na próxima página.
-                    if (scope.sortedAndPaginatedList.totalCount % itemsPerPage == 0)
+                    if (scope.sortedAndPaginatedList.totalCount > 0 && scope.sortedAndPaginatedList.totalCount % itemsPerPage == 0)
                         return this.numberOfPages + 1;
 
                     return this.numberOfPages;
