@@ -395,6 +395,8 @@
                     } else {
                         $scope.sortedAndPaginatedList = getSortedAndPaginatedList(w.getList(), w.getCurrentPage(), w.getItemsPerPage(), w.getOrderBy(), w.getSortContext(), w.getPredicates(), $filter);
                     }
+                } else {
+                    $scope.sortedAndPaginatedList = null;
                 }
 
                 // inicio paginação
