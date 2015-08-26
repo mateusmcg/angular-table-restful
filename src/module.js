@@ -31,12 +31,18 @@
                             this.atConfig.selectedItem = undefined;
                         };
 
-                        if ($attributes.atScroll != undefined) {
+                        if ($attributes.atNoScroll == undefined) {
                             var scroll = angular.element('<div class="table-scroll"></div>');
                             $element.before(scroll);
                             scroll.append($element);
                             $element.find('.scrolled-pagination').insertAfter(scroll).addClass('text-center');
                         }
+
+                        // destroy
+                        // se escopo destruido remove eventos
+                        $scope.$on('$destroy', function () {
+
+                        });
                     }
                 };
             }

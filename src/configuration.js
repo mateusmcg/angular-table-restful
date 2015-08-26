@@ -62,7 +62,7 @@
     })();
 
     ScopeConfigWrapper = (function () {
-        function ScopeConfigWrapper(scope, listName, changeEvent, itemsPerPage, atConfig, $q, $rootScope) {
+        function ScopeConfigWrapper(scope, listName, changeEvent, itemsPerPage, atConfig, atPagesToShow, $q, $rootScope) {
             if (angular.isDefined(itemsPerPage)) {
                 if (itemsPerPage.trim() == '') {
                     itemsPerPage = $rootScope.appContext && $rootScope.appContext.defaultPageSize ? $rootScope.appContext.defaultPageSize : 10;
@@ -83,7 +83,7 @@
                 sortList: [],
                 predicates: [],
                 numberOfPages: 1,
-                numberOfPagesToShow: 5, // ToDo: criar attr pra redefinir
+                numberOfPagesToShow: atPagesToShow ? atPagesToShow : 5,
                 getLastPage: function () {
                     //Caso todas as páginas estiverem ocupadas, significa que o próximo item que entrar estará na próxima página.
                     if (scope.sortedAndPaginatedList.totalCount % itemsPerPage == 0)
@@ -282,6 +282,8 @@
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
                 td = _ref[_i];
                 td = angular.element(td);
+                if (table.attr('at-no-ellipsis') == undefined)
+                    td.addClass('text-ellipsis');
                 attribute = td.attr("at-attribute");
                 title = td.attr("at-title") || this.capitaliseFirstLetter(td.attr("at-attribute"));
                 sortable = td.attr("at-sortable") !== void 0 || this.isSortable(td.attr("class"));
@@ -348,7 +350,7 @@
 
             var getFillerArray, getSortedAndPaginatedList, update, w;
 
-            w = new ScopeConfigWrapper($scope, $attributes.atTable, $attributes.atChange, $attributes.atPaginated, $attributes.atConfig, $q, $rootScope);
+            w = new ScopeConfigWrapper($scope, $attributes.atTable, $attributes.atChange, $attributes.atPaginated, $attributes.atConfig, $attributes.atPagesToShow, $q, $rootScope);
 
             getSortedAndPaginatedList = function (list, currentPage, itemsPerPage, orderBy, sortContext, predicate, $filter) {
                 var fromPage, val;
@@ -630,7 +632,8 @@
             tfoot.append(emptyTableTemplate);
 
             if (this.tableConfiguration.paginated) {
-                if (this.element.attr("at-scroll") == undefined) {
+                //Se informar o attr atNoScroll, não deve ser adicionado o scroll, logo a paginação fica normal.
+                if (this.element.attr("at-no-scroll") != undefined) {
                     tfoot.append(paginationTemplate);
                 } else {
                     var pagination = angular.element(paginationTemplateScroll);
@@ -747,11 +750,10 @@
 
         PageSequence.prototype.realignGreedy = function (page) {
             var newStart;
-            if (page < this.data[0]) {
+
+            //Se a página que está sendo navegada não existe na lista de páginas exibidas, atualizo as páginas a serem exibidas.
+            if (this.data.indexOf(page) == -1) {
                 newStart = page;
-                return this.data = this.generate(newStart);
-            } else if (page > this.data[this.length - 1]) {
-                newStart = page - (this.length - 1);
                 return this.data = this.generate(newStart);
             }
         };

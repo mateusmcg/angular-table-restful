@@ -13,11 +13,11 @@
       __extends = function (child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
     emptyTableTemplate = '<tr ng-show="isEmpty()"><td colspan="100%"><strong class="text-warning"><i18n>Nenhum item encontrado.</i18n></strong></td></tr>';
-    paginationTemplateScroll = "<div style='margin: 0px;'><ul class='pagination'><li ng-class='{disabled: getCurrentPage() <= 0}'><a href='' ng-click='firstPage()'>&lsaquo;</a></li><li ng-if='pageSequence.data[0] > 0'><a href='' ng-click='stepPage(-atConfig.numberOfPages)'>1</a></li><li ng-if='pageSequence.data[0] > 0'><a href='' ng-click='goToPage(getCurrentPage() + 1 <= 10 ? 0 : getCurrentPage() - 10)'>&hellip;</a></li><li ng-class='{active: getCurrentPage() == page}' ng-repeat='page in pageSequence.data'><a href='' ng-click='goToPage(page)'>{{page + 1}}</a></li><li ng-if='pageSequence.data[pageSequence.data.length -1] < getNumberOfPages() - 1'><a href='' ng-click='goToPage(getCurrentPage() + 1 + 10 > getNumberOfPages() ? getNumberOfPages() - 1 : atConfig.currentPage + 10)'>&hellip;</a></li><li ng-if='pageSequence.data[pageSequence.data.length -1] < getNumberOfPages() - 1'><a href='' ng-click='stepPage(getNumberOfPages())'>{{getNumberOfPages()}}</a></li><li ng-class='{disabled: getCurrentPage() >= getNumberOfPages() - 1}'><a href='' ng-click='stepPage(1)'>&rsaquo;</a></li></ul></div>";
+    paginationTemplateScroll = "<div ng-show='isInitialized() && !isEmpty() && getNumberOfPages() > 1' style='margin: 0px;margin-top:10px;'><ul class='pagination'><li ng-class='{disabled: getCurrentPage() <= 0}'><a href='' ng-click='firstPage()'>&lsaquo;</a></li><li ng-if='pageSequence.data[0] > 0'><a href='' ng-click='stepPage(-atConfig.numberOfPages)'>1</a></li><li ng-if='pageSequence.data[0] > 0'><a href='' ng-click='stepPage(-(pageSequence.data.indexOf(getCurrentPage()) + atConfig.numberOfPagesToShow))'>&hellip;</a></li><li ng-class='{active: getCurrentPage() == page}' ng-repeat='page in pageSequence.data'><a href='' ng-click='goToPage(page)'>{{page + 1}}</a></li><li ng-if='pageSequence.data[pageSequence.data.length -1] < getNumberOfPages() - 1'><a href='' ng-click='stepPage(atConfig.numberOfPagesToShow - pageSequence.data.indexOf(getCurrentPage()))'>&hellip;</a></li><li ng-if='pageSequence.data[pageSequence.data.length -1] < getNumberOfPages() - 1'><a href='' ng-click='stepPage(getNumberOfPages())'>{{getNumberOfPages()}}</a></li><li ng-class='{disabled: getCurrentPage() >= getNumberOfPages() - 1}'><a href='' ng-click='stepPage(1)'>&rsaquo;</a></li></ul></div>";
     paginationTemplate = "<tr ng-show='isInitialized() && !isEmpty() && getNumberOfPages() > 1' class='at-pagination'><td colspan='100%'>" + paginationTemplateScroll + "</td></tr>";
 
     angular.module("angular-table", []);
-
+    
     ColumnConfiguration = (function () {
         function ColumnConfiguration(bodyMarkup, headerMarkup) {
             this.attribute = bodyMarkup.attribute;
@@ -82,7 +82,7 @@
     })();
 
     ScopeConfigWrapper = (function () {
-        function ScopeConfigWrapper(scope, listName, changeEvent, itemsPerPage, atConfig, $q, $rootScope) {
+        function ScopeConfigWrapper(scope, listName, changeEvent, itemsPerPage, atConfig, atPagesToShow, $q, $rootScope) {
             if (angular.isDefined(itemsPerPage)) {
                 if (itemsPerPage.trim() == '') {
                     itemsPerPage = $rootScope.appContext && $rootScope.appContext.defaultPageSize ? $rootScope.appContext.defaultPageSize : 10;
@@ -103,7 +103,7 @@
                 sortList: [],
                 predicates: [],
                 numberOfPages: 1,
-                numberOfPagesToShow: 5, // ToDo: criar attr pra redefinir
+                numberOfPagesToShow: atPagesToShow ? atPagesToShow : 5,
                 getLastPage: function () {
                     //Caso todas as páginas estiverem ocupadas, significa que o próximo item que entrar estará na próxima página.
                     if (scope.sortedAndPaginatedList.totalCount % itemsPerPage == 0)
@@ -302,6 +302,8 @@
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
                 td = _ref[_i];
                 td = angular.element(td);
+                if (table.attr('at-no-ellipsis') == undefined)
+                    td.addClass('text-ellipsis');
                 attribute = td.attr("at-attribute");
                 title = td.attr("at-title") || this.capitaliseFirstLetter(td.attr("at-attribute"));
                 sortable = td.attr("at-sortable") !== void 0 || this.isSortable(td.attr("class"));
@@ -368,7 +370,7 @@
 
             var getFillerArray, getSortedAndPaginatedList, update, w;
 
-            w = new ScopeConfigWrapper($scope, $attributes.atTable, $attributes.atChange, $attributes.atPaginated, $attributes.atConfig, $q, $rootScope);
+            w = new ScopeConfigWrapper($scope, $attributes.atTable, $attributes.atChange, $attributes.atPaginated, $attributes.atConfig, $attributes.atPagesToShow, $q, $rootScope);
 
             getSortedAndPaginatedList = function (list, currentPage, itemsPerPage, orderBy, sortContext, predicate, $filter) {
                 var fromPage, val;
@@ -650,7 +652,8 @@
             tfoot.append(emptyTableTemplate);
 
             if (this.tableConfiguration.paginated) {
-                if (this.element.attr("at-scroll") == undefined) {
+                //Se informar o attr atNoScroll, não deve ser adicionado o scroll, logo a paginação fica normal.
+                if (this.element.attr("at-no-scroll") != undefined) {
                     tfoot.append(paginationTemplate);
                 } else {
                     var pagination = angular.element(paginationTemplateScroll);
@@ -767,11 +770,10 @@
 
         PageSequence.prototype.realignGreedy = function (page) {
             var newStart;
-            if (page < this.data[0]) {
+
+            //Se a página que está sendo navegada não existe na lista de páginas exibidas, atualizo as páginas a serem exibidas.
+            if (this.data.indexOf(page) == -1) {
                 newStart = page;
-                return this.data = this.generate(newStart);
-            } else if (page > this.data[this.length - 1]) {
-                newStart = page - (this.length - 1);
                 return this.data = this.generate(newStart);
             }
         };
@@ -814,12 +816,18 @@
                             this.atConfig.selectedItem = undefined;
                         };
 
-                        if ($attributes.atScroll != undefined) {
+                        if ($attributes.atNoScroll == undefined) {
                             var scroll = angular.element('<div class="table-scroll"></div>');
                             $element.before(scroll);
                             scroll.append($element);
                             $element.find('.scrolled-pagination').insertAfter(scroll).addClass('text-center');
                         }
+
+                        // destroy
+                        // se escopo destruido remove eventos
+                        $scope.$on('$destroy', function () {
+
+                        });
                     }
                 };
             }
