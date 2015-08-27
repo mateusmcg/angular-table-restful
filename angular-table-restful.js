@@ -279,9 +279,10 @@
         };
 
         TableConfiguration.prototype.collectHeaderMarkup = function (table) {
-            var customHeaderMarkups, th, tr, _i, _len, _ref;
+            var customHeaderMarkups, th, tr, thead, _i, _len, _ref;
             customHeaderMarkups = {};
             tr = table.find("tr");
+            thead = table.find("thead");
             _ref = tr.find("th");
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
                 th = _ref[_i];
@@ -290,7 +291,10 @@
                     customContent: th.html(),
                     attributes: th[0].attributes
                 };
-                //th.remove();
+
+                if (!thead.is('[at-ignore-header]')) {
+                    th.remove();
+                }
             }
             return customHeaderMarkups;
         };
@@ -302,7 +306,7 @@
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
                 td = _ref[_i];
                 td = angular.element(td);
-                if (table.attr('at-no-ellipsis') == undefined)
+                if (table.attr('at-ellipsis') != "false")
                     td.addClass('text-ellipsis');
                 attribute = td.attr("at-attribute");
                 title = td.attr("at-title") || this.capitaliseFirstLetter(td.attr("at-attribute"));
@@ -629,7 +633,7 @@
                 this.element.prepend(thead);
             }
 
-            if (!thead.is('[at-ignore]')) {
+            if (!thead.is('[at-ignore-header]')) {
                 header = this.constructHeader();
             }
 
@@ -652,8 +656,8 @@
             tfoot.append(emptyTableTemplate);
 
             if (this.tableConfiguration.paginated) {
-                //Se informar o attr atNoScroll, não deve ser adicionado o scroll, logo a paginação fica normal.
-                if (this.element.attr("at-no-scroll") != undefined) {
+                //Se o attr atScroll for false, não deve ser adicionado o scroll, logo a paginação fica normal.
+                if (this.element.attr("at-scroll") == "false") {
                     tfoot.append(paginationTemplate);
                 } else {
                     var pagination = angular.element(paginationTemplateScroll);
@@ -816,18 +820,48 @@
                             this.atConfig.selectedItem = undefined;
                         };
 
-                        if ($attributes.atNoScroll == undefined) {
+                        if ($attributes.atScroll != "false") {
                             var scroll = angular.element('<div class="table-scroll"></div>');
                             $element.before(scroll);
                             scroll.append($element);
-                            $element.find('.scrolled-pagination').insertAfter(scroll).addClass('text-center');
+                            var pagination = $element.find('.scrolled-pagination');
+                            pagination.insertAfter(scroll).addClass('text-center');
+
+                            function destroy() {
+                                if (scroll && pagination) {
+                                    var s = scroll;
+                                    var p = pagination;
+                                    scroll = null;
+                                    pagination = null;
+                                    s.remove();
+                                    p.remove();
+                                    return;
+                                }
+
+                                if (scroll) {
+                                    var s = scroll;
+                                    scroll = null;
+                                    s.remove();
+                                }
+
+                                if (pagination) {
+                                    var p = pagination;
+                                    pagination = null;
+                                    p.remove();
+                                }
+                            };
+
+                            //// destroy
+                            //// se escopo destruido remove elementos
+                            $scope.$on('$destroy', function (ev) {
+                                destroy();
+                            });
+
+                            //// se a table for destruida remove demais elementos
+                            $element.on('$destroy', function (ev) {
+                                destroy();
+                            });
                         }
-
-                        // destroy
-                        // se escopo destruido remove eventos
-                        $scope.$on('$destroy', function () {
-
-                        });
                     }
                 };
             }

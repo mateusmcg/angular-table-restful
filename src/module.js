@@ -31,18 +31,48 @@
                             this.atConfig.selectedItem = undefined;
                         };
 
-                        if ($attributes.atNoScroll == undefined) {
+                        if ($attributes.atScroll != "false") {
                             var scroll = angular.element('<div class="table-scroll"></div>');
                             $element.before(scroll);
                             scroll.append($element);
-                            $element.find('.scrolled-pagination').insertAfter(scroll).addClass('text-center');
+                            var pagination = $element.find('.scrolled-pagination');
+                            pagination.insertAfter(scroll).addClass('text-center');
+
+                            function destroy() {
+                                if (scroll && pagination) {
+                                    var s = scroll;
+                                    var p = pagination;
+                                    scroll = null;
+                                    pagination = null;
+                                    s.remove();
+                                    p.remove();
+                                    return;
+                                }
+
+                                if (scroll) {
+                                    var s = scroll;
+                                    scroll = null;
+                                    s.remove();
+                                }
+
+                                if (pagination) {
+                                    var p = pagination;
+                                    pagination = null;
+                                    p.remove();
+                                }
+                            };
+
+                            //// destroy
+                            //// se escopo destruido remove elementos
+                            $scope.$on('$destroy', function (ev) {
+                                destroy();
+                            });
+
+                            //// se a table for destruida remove demais elementos
+                            $element.on('$destroy', function (ev) {
+                                destroy();
+                            });
                         }
-
-                        // destroy
-                        // se escopo destruido remove eventos
-                        $scope.$on('$destroy', function () {
-
-                        });
                     }
                 };
             }
