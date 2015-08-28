@@ -3,7 +3,7 @@ angular.module("angular-table-restful-example").controller("interactiveExampleCt
 
   $scope.filteredList = $scope.originalList;
 
-  $scope.itemsPerPage: 5;
+  $scope.itemsPerPage = 5;
 
   $scope.add = function() {
     $scope.originalList.push({name: $scope.nameToAdd});
