@@ -59,9 +59,9 @@
             <div tab-title="Basic Example" active-tab="Result"><br>
               <angular-tabs id="basicExampleTabs" active-tab="Result"> <br>
                 <div tab-title="Result">
-                  <div class="row" ng-controller="basicExampleCtrl">
+                  <div class="row" ng-controller="basicExampleCtrl as vm">
                     <div class="col-md-12">
-                      <table at-table="list" at-paginated>
+                      <table at-table="vm.list" at-paginated>
                         <tbody>
                           <tr>
                             <td at-sortable at-attribute="index" at-title="Index"></td>
@@ -77,19 +77,21 @@
                 <div tab-title="Code">
                   <div ng-non-bindable>
                     <h4>Html</h4>
-<article class="markdown-body"><div class="highlight highlight-html"><pre>  &lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>&gt;
-    &lt;<span class="pl-ent">tbody</span>&gt;
-      &lt;<span class="pl-ent">tr</span>&gt;
-        &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>index<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Index<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
-        &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Name<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
-        &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Email<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
-      &lt;/<span class="pl-ent">tr</span>&gt;
-    &lt;/<span class="pl-ent">tbody</span>&gt;
-  &lt;/<span class="pl-ent">table</span>&gt;</pre></div>
-</article> 
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>&gt;
+  &lt;<span class="pl-ent">tbody</span>&gt;
+    &lt;<span class="pl-ent">tr</span>&gt;
+      &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>index<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Index<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+      &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Name<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+      &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Email<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+    &lt;/<span class="pl-ent">tr</span>&gt;
+  &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>
                     <h4>Javascript</h4>
 <article class="markdown-body"><div class="highlight highlight-javascript"><pre>angular.<span class="pl-c1">module</span>(<span class="pl-s"><span class="pl-pds">"</span>angular-table-restful-example<span class="pl-pds">"</span></span>).<span class="pl-c1">controller</span>(<span class="pl-s"><span class="pl-pds">"</span>basicExampleCtrl<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">"</span>$scope<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">$scope</span>) {
-  $scope.<span class="pl-c1">list</span> <span class="pl-k">=</span> $scope.$parent.<span class="pl-c1">personList</span>;
+    <span class="pl-k">var</span> vm <span class="pl-k">=</span> <span class="pl-v">this</span>;
+
+    vm.<span class="pl-c1">list</span> <span class="pl-k">=</span> $scope.$parent.<span class="pl-c1">personList</span>;
 }]);</pre></div>
 </article>
                   </div>
@@ -100,9 +102,9 @@
             <div tab-title="Interactive Example"><br>
               <angular-tabs id="interactiveTabs" active-tab="Result"> <br>
                 <div tab-title="Result">
-                  <div class="row" ng-controller="interactiveExampleCtrl">
+                  <div class="row" ng-controller="interactiveExampleCtrl as vm">
                     <div class="col-md-7">
-                      <table at-table="originalList" at-paginated={{itemsPerPage}}>
+                      <table at-table="vm.filteredList" at-paginated={{vm.itemsPerPage}} at-pages-to-show={{vm.pagesToShow}}>
                         <tbody>
                           <tr>
                             <td at-sortable at-attribute="index" at-title="Index"></td>
@@ -115,17 +117,24 @@
                     <div class="col-md-5">
                       <h4>Add</h4>
                       <div class="input-group col-lg-6">
-                        <input type="text" class="form-control" ng-model="nameToAdd">
+                        <input type="text" class="form-control" ng-model="vm.nameToAdd">
                         <span class="input-group-btn">
-                          <button class="btn btn-default btn-success" type="button" ng-click="add()">Add</button>
+                          <button class="btn btn-default btn-success" type="button" ng-click="vm.add()">Add</button>
                         </span>
                       </div>
 
                       <h4>Filter</h4>
-                      <input type="text" class="form-control" ng-model="query" ng-change="updateFilteredList()">
+                      <input type="text" class="form-control" ng-model="vm.query" ng-change="vm.updateFilteredList()">
 
                       <h4>ItemsPerPage</h4>
-                      <select ng-model="itemsPerPage" class="form-control">
+                      <select ng-model="vm.itemsPerPage" class="form-control">
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        <option value="9">9</option>
+                      </select>
+
+                      <h4>PagesToShow</h4>
+                      <select ng-model="vm.pagesToShow" class="form-control">
                         <option value="3">3</option>
                         <option value="5">5</option>
                         <option value="9">9</option>

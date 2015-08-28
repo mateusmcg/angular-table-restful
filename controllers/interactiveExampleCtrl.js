@@ -1,16 +1,22 @@
 angular.module("angular-table-restful-example").controller("interactiveExampleCtrl", ["$scope", "$filter", function($scope, $filter) {
-  $scope.originalList = $scope.$parent.personList;
 
-  $scope.filteredList = $scope.originalList;
+  var vm = this;	
 
-  $scope.itemsPerPage = 5;
+  vm.originalList = $scope.$parent.personList;
+  vm.filteredList = vm.originalList;
 
-  $scope.add = function() {
-    $scope.originalList.push({name: $scope.nameToAdd});
-    $scope.updateFilteredList();
+  vm.itemsPerPage = 5;
+  vm.pagesToShow = 2;
+
+  vm.add = add;
+  vm.updateFilteredList = updateFilteredList;
+
+  vm.add = function() {
+    vm.originalList.push({name: vm.nameToAdd});
+    vm.updateFilteredList();
   }
 
-  $scope.updateFilteredList = function() {
-    $scope.filteredList = $filter("filter")($scope.originalList, $scope.query);
+  vm.updateFilteredList = function() {
+    vm.filteredList = $filter("filter")(vm.originalList, vm.query);
   };
 }])

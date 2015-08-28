@@ -1,3 +1,5 @@
 angular.module("angular-table-restful-example").controller("basicExampleCtrl", ["$scope", function($scope) {
-  $scope.list = $scope.$parent.personList;
+	var vm = this;
+
+  	vm.list = $scope.$parent.personList;
 }]);
