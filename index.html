@@ -14,7 +14,7 @@
 
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/angular.js"></script>
-    <script type="text/javascript" src="js/underscore.js"></script>
+    <script type="text/javascript" src="js/lodash.js"></script>
     <script type="text/javascript" src="js/angular-table.js"></script>
     <script type="text/javascript" src="js/angular-tabs.min.js"></script>
     <script type="text/javascript" src="js/examplesModule.js"></script>  
@@ -53,7 +53,7 @@
 
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner" ng-app="angular-table-restful-example" ng-controller="example-ctrl">
+      <section id="main_content" ng-app="angular-table-restful-example" ng-controller="example-ctrl">
         <div class="container">
           <angular-tabs id="mainTabs" active-tab="Basic Example">
             <div tab-title="Basic Example" active-tab="Result"><br>
@@ -78,7 +78,7 @@
                   <div ng-non-bindable>
                     <h4>Html</h4>
                       <div class="highlight">
-                        <pre>
+                        <pre><![CDATA[
                           <code class="language-html" data-lang="html">
                             <table at-table="list" at-paginated>
                               <tbody>
@@ -89,17 +89,15 @@
                                 </tr>
                               </tbody>
                             </table>      
-                          </code>
+                          </code>]]>
                         </pre>
                       </div>                    
                     <h4>Javascript</h4>
                     <div class="highlight">
-                      <pre>
-                        <code class="language-javascript" data-lang="javascript">
+                      <pre><![CDATA[                        
                           angular.module("angular-table-restful-example").controller("basicExampleCtrl", ["$scope", function($scope) {
                             $scope.list = $scope.$parent.personList;
-                          }]);
-                        </code>
+                          }]);]]>
                       </pre>
                     </div>    
                   </div>
