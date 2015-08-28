@@ -1,19 +1,21 @@
 {
-	"0" : {
-		"name": "Janet Bolton"
-	},
-	"1" : {
-		"name": "Maria Liu"
-	},
-	"2" : {
-		"name": "Anne Warren"
-	},
-	"3" : {
-		"name": "Keith Steele"
-	},
-	"4" : {
-		"name": "Jerome Lyons"
-	},
+	"result": [
+		{
+		"name": "Kristin Hill"
+		},
+		{
+			"name": "Valerie Francis"
+		},
+		{
+			"name": "Bob Abbott"
+		},
+		{
+			"name": "Greg Boyd"
+		},
+		{	
+			"name": "Peggy Massey"
+		}
+	],
 	"totalCount": 3,
-	"pageNo": 2
+	"pageNo": 2	
 }

@@ -1,19 +1,21 @@
 {
-	"0" : {
+	"result": [
+		{
 		"name": "Kristin Hill"
-	},
-	"1" : {
-		"name": "Valerie Francis"
-	},
-	"2" : {
-		"name": "Bob Abbott"
-	},
-	"3" : {
-		"name": "Greg Boyd"
-	},
-	"4" : {
-		"name": "Peggy Massey"
-	},
+		},
+		{
+			"name": "Valerie Francis"
+		},
+		{
+			"name": "Bob Abbott"
+		},
+		{
+			"name": "Greg Boyd"
+		},
+		{	
+			"name": "Peggy Massey"
+		}
+	],
 	"totalCount": 3,
 	"pageNo": 1	
 }
