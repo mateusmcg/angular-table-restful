@@ -11,12 +11,12 @@ angular.module("angular-table-restful-example").controller("interactiveExampleCt
   vm.add = add;
   vm.updateFilteredList = updateFilteredList;
 
-  vm.add = function() {
+  add = function() {
     vm.originalList.push({name: vm.nameToAdd});
     vm.updateFilteredList();
   }
 
-  vm.updateFilteredList = function() {
+  updateFilteredList = function() {
     vm.filteredList = $filter("filter")(vm.originalList, vm.query);
   };
 }])
