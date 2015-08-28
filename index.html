@@ -61,6 +61,22 @@
                 <div tab-title="Result">
                   <div class="row" ng-controller="basicExampleCtrl">
                     <div class="col-md-12">
+                      <table at-table="list" at-paginated>
+                        <tbody>
+                          <tr>
+                            <td at-sortable at-attribute="index" at-title="Index"></td>
+                            <td at-sortable at-attribute="name" at-title="Name"></td>
+                            <td at-sortable at-attribute="email" at-title="Email"></td>
+                          </tr>
+                        </tbody>
+                      </table>                 
+                    </div>
+                  </div>                    
+                </div>
+
+                <div tab-title="Code">
+                  <div ng-non-bindable>
+                    <h4>Html</h4>
 <article class="markdown-body"><div class="highlight highlight-html"><pre>  &lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>&gt;
     &lt;<span class="pl-ent">tbody</span>&gt;
       &lt;<span class="pl-ent">tr</span>&gt;
@@ -70,35 +86,15 @@
       &lt;/<span class="pl-ent">tr</span>&gt;
     &lt;/<span class="pl-ent">tbody</span>&gt;
   &lt;/<span class="pl-ent">table</span>&gt;</pre></div>
-</article>                  
-                    </div>
-                  </div>                    
-                </div>
-
-                <div tab-title="Code">
-                  <div ng-non-bindable>
-                    <h4>Html</h4>
-                      <article class="markdown-body">
-                        <pre>
-                          <code class="html">&lt;table at-table=&quot;list&quot; at-paginated&gt;
-                        &lt;tbody&gt;
-                          &lt;tr&gt;
-                            &lt;td at-sortable at-attribute=&quot;index&quot; at-title=&quot;Index&quot;&gt;&lt;/td&gt;
-                            &lt;td at-sortable at-attribute=&quot;name&quot; at-title=&quot;Name&quot;&gt;&lt;/td&gt;
-                            &lt;td at-sortable at-attribute=&quot;email&quot; at-title=&quot;Email&quot;&gt;&lt;/td&gt;
-                          &lt;/tr&gt;
-                        &lt;/tbody&gt;
-                      &lt;/table&gt;      
-                          </code>
-                        </pre>
-                      </article>                
+</article> 
                     <h4>Javascript</h4>
                     <div class="highlight">
                       <pre>
                         <code class="language-javascript" data-lang="javascript">
-                          angular.module("angular-table-restful-example").controller("basicExampleCtrl", ["$scope", function($scope) {
-                            $scope.list = $scope.$parent.personList;
-                          }]);
+<article class="markdown-body"><div class="highlight highlight-javascript"><pre>angular.<span class="pl-c1">module</span>(<span class="pl-s"><span class="pl-pds">"</span>angular-table-restful-example<span class="pl-pds">"</span></span>).<span class="pl-c1">controller</span>(<span class="pl-s"><span class="pl-pds">"</span>basicExampleCtrl<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">"</span>$scope<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">$scope</span>) {
+  $scope.<span class="pl-c1">list</span> <span class="pl-k">=</span> $scope.$parent.<span class="pl-c1">personList</span>;
+}]);</pre></div>
+</article>
                         </code>
                       </pre>
                     </div>    
