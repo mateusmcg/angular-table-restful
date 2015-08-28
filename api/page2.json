@@ -1,21 +1,19 @@
 {
-	"result": [
-		{
-			"name": "Janet Bolton"
-		},
-		{
-			"name": "Maria Liu"
-		},
-		{
-			"name": "Anne Warren"
-		},
-		{
-			"name": "Keith Steele"
-		},
-		{
-			"name": "Jerome Lyons"
-		}
-	],
-	"totalCount": 3,
-	"pageNo": 2	
+	"0" : {
+		"name": "Janet Bolton"
+	},
+	"1" : {
+		"name": "Maria Liu"
+	},
+	"2" : {
+		"name": "Anne Warren"
+	},
+	"3" : {
+		"name": "Keith Steele"
+	},
+	"4" : {
+		"name": "Jerome Lyons"
+	},
+	"totalCount": "3",
+	"pageNo": 2
 }
