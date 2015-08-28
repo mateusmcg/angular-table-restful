@@ -1,7 +1,6 @@
 angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", function($http) {
   var vm = this;	
 
-  vm.getList = getList;
   vm.changePage = changePage;
 
   function changePage(pageInfo, deferred){

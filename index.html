@@ -135,7 +135,7 @@
                         <angular-tabs id="customTabs" active-tab="Result">
                             <br>
                             <div tab-title="Result/Code">
-                                <div class="row" ng-controller="customizingCtrl">
+                                <div class="row" ng-controller="customizingCtrl as vm">
                                     <h3>No Pagination. Remove <code>at-pagination</code></h3>
                                     <div class="row">
                                         <div class="col-md-3">
@@ -170,13 +170,15 @@
                         <angular-tabs id="apiPaginationTabs" active-tab="Result">
                             <br>
                             <div tab-title="Result">
-                                <table at-table="vm.filteredList" at-pagination="5" at-load at-change="vm.changePage">
+                              <div class="row" ng-controller="apiCtrl as vm">
+                                <table at-table="vm.list" at-pagination="5" at-load at-change="vm.changePage">
                                     <tbody>
                                         <tr>
                                             <td at-sortable at-attribute="name" at-title="Name"></td>
                                         </tr>
                                     </tbody>
-                                </table>
+                                </table>                              
+                              </div>
                             </div>
                             <div tab-title="Code">
 
