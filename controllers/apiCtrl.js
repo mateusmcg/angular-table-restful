@@ -7,7 +7,8 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
   	var page = 'page' + pageInfo.pageNo + '.json';
 
   	$http.get('api/' + page).then(function(successData){
-  		deferred.resolve(successData.data);
+      var arrayData = _.values(successData.data);
+  		deferred.resolve(arrayData);
   	}, function(errorData){
   		alert('Something went wrong with the API call :(');
   	});
