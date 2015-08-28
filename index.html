@@ -7,12 +7,12 @@
     <meta name="description" content="Angular-table-restful : A table for AngularJs with support for restful API standard.">    
   
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">    
-    <link rel="stylesheet" type="text/css" href="css/syntax.css"> 
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css"> 
 
     <title>Angular-table-restful</title>
 
     <script type="text/javascript" src="js/angular.js"></script>
-    <script type="text/javascript" src="../js/angular-table.min.js"></script>
+    <script type="text/javascript" src="js/angular-table.js"></script>
     <script type="text/javascript" src="js/angular-tabs.min.js"></script>
     <script type="text/javascript" src="js/examplesModule.js"></script>    
 
@@ -58,7 +58,7 @@
                 <div tab-title="Result">
                   <div class="row" ng-controller="basicExampleCtrl">
                     <div class="col-md-12">
-                      {% include views/basic_example.html %}
+
                     </div>
                   </div>                    
                 </div>
@@ -66,13 +66,9 @@
                 <div tab-title="Code">
                   <div ng-non-bindable>
                     <h4>Html</h4>
-{% highlight html %}
-{% include views/basic_example.html %}
-{% endhighlight %}
+
                     <h4>Javascript</h4>
-{% highlight javascript %}
-{% include controllers/basicExampleCtrl.js %}
-{% endhighlight %}
+
                   </div>
                 </div>
               </angular-tabs>              
@@ -107,8 +103,4 @@
 
   </body>
 
-  <script type="text/javascript">
-      {% include controllers/basicExampleCtrl.js %}
-      {% include controllers/customizingTheHeaderCtrl.js %}
-  </script>
 </html>
