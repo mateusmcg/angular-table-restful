@@ -125,20 +125,6 @@
 
                       <h4>Filter</h4>
                       <input type="text" class="form-control" ng-model="vm.query" ng-change="vm.updateFilteredList()">
-
-                      <h4>ItemsPerPage</h4>
-                      <select ng-model="vm.itemsPerPage" class="form-control">
-                        <option value="3">3</option>
-                        <option value="5">5</option>
-                        <option value="9">9</option>
-                      </select>
-
-                      <h4>PagesToShow</h4>
-                      <select ng-model="vm.pagesToShow" class="form-control">
-                        <option value="3">3</option>
-                        <option value="5">5</option>
-                        <option value="9">9</option>
-                      </select>
                     </div>
                   </div>
                 </div>
@@ -149,15 +135,37 @@
               </angular-tabs>
             </div>
 
-            <div tab-title="Customizing The Header"><br>
-              <angular-tabs id="customHeaderTabs" active-tab="Result"> <br>
+            <div tab-title="Customizing"><br>
+              <angular-tabs id="customTabs" active-tab="Result"> <br>
                 <div tab-title="Result">
-                  
-                </div>
+                  <div class="row" ng-controller="customizingCtrl">
+                    <h3>No Pagination. Remove <code>at-pagination</code></h3>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <table at-table="vm.filteredList">
+                            <tbody>
+                              <tr>
+                                <td at-sortable at-attribute="name" at-title="Name"></td>
+                              </tr>
+                            </tbody>
+                          </table>     
+                        </div>
+                        <div class="col-md-9">
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.filteredList<span class="pl-pds">"</span></span>&gt;
+  &lt;<span class="pl-ent">tbody</span>&gt;
+    &lt;<span class="pl-ent">tr</span>&gt;
+      &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Name<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+    &lt;/<span class="pl-ent">tr</span>&gt;
+  &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>
+                        </div>
+                      </div>
 
-                <div tab-title="Code">
-                  
-                </div>
+                    <div tab-title="Code">
+                      
+                    </div>
+                  </div>                  
               </angular-tabs>
             </div>
 
@@ -180,7 +188,7 @@
 
   <!-- Controllers -->
   <script type="text/javascript" src="controllers/basicExampleCtrl.js"></script>
-  <script type="text/javascript" src="controllers/customizingTheHeaderCtrl.js"></script>
+  <script type="text/javascript" src="controllers/customizingCtrl.js"></script>
   <script type="text/javascript" src="controllers/interactiveExampleCtrl.js"></script>
 
 </html>
