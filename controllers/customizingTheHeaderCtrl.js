@@ -1,4 +1,4 @@
-angular.module("angular-table-example").controller("customizingTheHeaderCtrl", ["$scope", function($scope) {
+angular.module("angular-table-restful-example").controller("customizingTheHeaderCtrl", ["$scope", function($scope) {
   $scope.list = [
     {name: "mateus"}
   ]
