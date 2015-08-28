@@ -1,19 +1,17 @@
-{
-	"data": [
-		{
-			"name": "Jacob Stone"
-		},
-		{
-			"name": "Marion Dunlap"
-		},
-		{
-			"name": "Stacy Robinson"
-		},
-		{
-			"name": "Luis Chappell"
-		},
-		{
-			"name": "Kimberly Horne"
-		}
-	]	
-}
+"data": [
+	{
+		"name": "Jacob Stone"
+	},
+	{
+		"name": "Marion Dunlap"
+	},
+	{
+		"name": "Stacy Robinson"
+	},
+	{
+		"name": "Luis Chappell"
+	},
+	{
+		"name": "Kimberly Horne"
+	}
+]	
