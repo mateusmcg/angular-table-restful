@@ -1,83 +1,77 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-
-  <head>
+<head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Angular-table-restful : A table for AngularJs with support for restful API standard.">    
-  
+    <meta name="description" content="Angular-table-restful : A table for AngularJs with support for restful API standard.">
+
     <link rel="stylesheet" type="text/css" href="css/markdown.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">    
-    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">     
-
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
     <title>Angular-table-restful</title>
-
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/angular.js"></script>
     <script type="text/javascript" src="js/lodash.js"></script>
     <script type="text/javascript" src="js/angular-table.js"></script>
     <script type="text/javascript" src="js/angular-tabs.min.js"></script>
-    <script type="text/javascript" src="js/examplesModule.js"></script>  
-
+    <script type="text/javascript" src="js/examplesModule.js"></script>
     <style>
-      .text-ellipsis {
-          max-width: 250px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-      }
+        .text-ellipsis {
+            max-width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-          .text-ellipsis:hover {
-              text-overflow: initial;
-              white-space: normal;
-          }
+            .text-ellipsis:hover {
+                text-overflow: initial;
+                white-space: normal;
+            }
     </style>
-  </head>
-
-  <body>
-
+</head>
+<body>
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          <a id="forkme_banner" href="https://github.com/mateusmcg/angular-table-restful">View on GitHub</a>
-
-          <h1 id="project_title">Angular-table-restful</h1>
-          <h2 id="project_tagline">A table for AngularJs with support for restful API standard.</h2>
-
+            <a id="forkme_banner" href="https://github.com/mateusmcg/angular-table-restful">View on GitHub</a>
+            <h1 id="project_title">Angular-table-restful</h1>
+            <h2 id="project_tagline">A table for AngularJs with support for restful API standard.</h2>
             <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/mateusmcg/angular-table-restful/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/mateusmcg/angular-table-restful/tarball/master">Download this project as a tar.gz file</a>
+                <a class="zip_download_link" href="https://github.com/mateusmcg/angular-table-restful/zipball/master">Download this project as a .zip file</a>
+                <a class="tar_download_link" href="https://github.com/mateusmcg/angular-table-restful/tarball/master">Download this project as a tar.gz file</a>
             </section>
         </header>
     </div>
-
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
-      <section id="main_content" ng-app="angular-table-restful-example" ng-controller="example-ctrl">
-        <div class="container">
-          <angular-tabs id="mainTabs" active-tab="Basic Example">
-            <div tab-title="Basic Example" active-tab="Result"><br>
-              <angular-tabs id="basicExampleTabs" active-tab="Result"> <br>
-                <div tab-title="Result">
-                  <div class="row" ng-controller="basicExampleCtrl as vm">
-                    <div class="col-md-12">
-                      <table at-table="vm.list" at-paginated>
-                        <tbody>
-                          <tr>
-                            <td at-sortable at-attribute="index" at-title="Index"></td>
-                            <td at-sortable at-attribute="name" at-title="Name"></td>
-                            <td at-sortable at-attribute="email" at-title="Email"></td>
-                          </tr>
-                        </tbody>
-                      </table>                 
-                    </div>
-                  </div>                    
-                </div>
-
-                <div tab-title="Code">
-                  <div ng-non-bindable>
-                    <h4>Html</h4>
-<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>&gt;
+        <section id="main_content" ng-app="angular-table-restful-example" ng-controller="example-ctrl">
+            <div class="container">
+                <angular-tabs id="mainTabs" active-tab="Basic Example">
+                    <div tab-title="Basic Example" active-tab="Result">
+                        <br>
+                        <angular-tabs id="basicExampleTabs" active-tab="Result">
+                            <br>
+                            <div tab-title="Result">
+                                <div class="row" ng-controller="basicExampleCtrl as vm">
+                                    <div class="col-md-12">
+                                        <table at-table="vm.list" at-paginated>
+                                            <tbody>
+                                                <tr>
+                                                    <td at-sortable at-attribute="index" at-title="Index"></td>
+                                                    <td at-sortable at-attribute="name" at-title="Name"></td>
+                                                    <td at-sortable at-attribute="email" at-title="Email"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div tab-title="Code">
+                                <div ng-non-bindable>
+                                    <h4>Html</h4>
+                                    <article class="markdown-body">
+                                        <div class="highlight highlight-html">
+                                            <pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>&gt;
   &lt;<span class="pl-ent">tbody</span>&gt;
     &lt;<span class="pl-ent">tr</span>&gt;
       &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>index<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Index<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
@@ -85,110 +79,125 @@
       &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Email<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
     &lt;/<span class="pl-ent">tr</span>&gt;
   &lt;/<span class="pl-ent">tbody</span>&gt;
-&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
-</article>
-                    <h4>Javascript</h4>
-<article class="markdown-body"><div class="highlight highlight-javascript"><pre>angular.<span class="pl-c1">module</span>(<span class="pl-s"><span class="pl-pds">"</span>angular-table-restful-example<span class="pl-pds">"</span></span>).<span class="pl-c1">controller</span>(<span class="pl-s"><span class="pl-pds">"</span>basicExampleCtrl<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">"</span>$scope<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">$scope</span>) {
-    <span class="pl-k">var</span> vm <span class="pl-k">=</span> <span class="pl-v">this</span>;
-
+&lt;/<span class="pl-ent">table</span>&gt;</pre>
+                                        </div>
+                                    </article>
+                                    <h4>Javascript</h4>
+                                    <article class="markdown-body">
+                                        <div class="highlight highlight-javascript">
+                                            <pre>angular.<span class="pl-c1">module</span>(<span class="pl-s"><span class="pl-pds">"</span>angular-table-restful-example<span class="pl-pds">"</span></span>).<span class="pl-c1">controller</span>(<span class="pl-s"><span class="pl-pds">"</span>basicExampleCtrl<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">"</span>$scope<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">$scope</span>) {
+                                            <span class="pl-k">var</span> vm <span class="pl-k">=</span> <span class="pl-v">this</span>;
     vm.<span class="pl-c1">list</span> <span class="pl-k">=</span> $scope.$parent.<span class="pl-c1">personList</span>;
-}]);</pre></div>
-</article>
-                  </div>
-                </div>
-              </angular-tabs>              
-            </div>
-
-            <div tab-title="Interactive Example"><br>
-              <angular-tabs id="interactiveTabs" active-tab="Result"> <br>
-                <div tab-title="Result">
-                  <div class="row" ng-controller="interactiveExampleCtrl as vm">
-                    <div class="col-md-7">
-                      <table at-table="vm.filteredList" at-paginated={{vm.itemsPerPage}} at-pages-to-show={{vm.pagesToShow}}>
-                        <tbody>
-                          <tr>
-                            <td at-sortable at-attribute="index" at-title="Index"></td>
-                            <td at-sortable at-attribute="name" at-title="Name"></td>
-                            <td at-sortable at-attribute="email" at-title="Email"></td>
-                          </tr>
-                        </tbody>
-                      </table>        
+}]);</pre>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </angular-tabs>
                     </div>
-                    <div class="col-md-5">
-                      <h4>Add</h4>
-                      <div class="input-group col-lg-6">
-                        <input type="text" class="form-control" ng-model="vm.nameToAdd">
-                        <span class="input-group-btn">
-                          <button class="btn btn-default btn-success" type="button" ng-click="vm.add()">Add</button>
-                        </span>
-                      </div>
+                    <div tab-title="Interactive Example">
+                        <br>
+                        <angular-tabs id="interactiveTabs" active-tab="Result">
+                            <br>
+                            <div tab-title="Result">
+                                <div class="row" ng-controller="interactiveExampleCtrl as vm">
+                                    <div class="col-md-7">
+                                        <table at-table="vm.filteredList" at-paginated={{vm.itemsPerPage}} at-pages-to-show={{vm.pagesToShow}}>
+                                            <tbody>
+                                                <tr>
+                                                    <td at-sortable at-attribute="index" at-title="Index"></td>
+                                                    <td at-sortable at-attribute="name" at-title="Name"></td>
+                                                    <td at-sortable at-attribute="email" at-title="Email"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <h4>Add</h4>
+                                        <div class="input-group col-lg-6">
+                                            <input type="text" class="form-control" ng-model="vm.nameToAdd">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default btn-success" type="button" ng-click="vm.add()">Add</button>
+                                            </span>
+                                        </div>
+                                        <h4>Filter</h4>
+                                        <input type="text" class="form-control" ng-model="vm.query" ng-change="vm.updateFilteredList()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div tab-title="Code">
 
-                      <h4>Filter</h4>
-                      <input type="text" class="form-control" ng-model="vm.query" ng-change="vm.updateFilteredList()">
+                            </div>
+                        </angular-tabs>
                     </div>
-                  </div>
-                </div>
-
-                <div tab-title="Code">
-                  
-                </div>
-              </angular-tabs>
-            </div>
-
-            <div tab-title="Customizing"><br>
-              <angular-tabs id="customTabs" active-tab="Result"> <br>
-                <div tab-title="Result">
-                  <div class="row" ng-controller="customizingCtrl">
-                    <h3>No Pagination. Remove <code>at-pagination</code></h3>
-                      <div class="row">
-                        <div class="col-md-3">
-                          <table at-table="vm.filteredList">
-                            <tbody>
-                              <tr>
-                                <td at-sortable at-attribute="name" at-title="Name"></td>
-                              </tr>
-                            </tbody>
-                          </table>     
-                        </div>
-                        <div class="col-md-9">
-<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.filteredList<span class="pl-pds">"</span></span>&gt;
+                    <div tab-title="Customizing">
+                        <br>
+                        <angular-tabs id="customTabs" active-tab="Result">
+                            <br>
+                            <div tab-title="Result/Code">
+                                <div class="row" ng-controller="customizingCtrl">
+                                    <h3>No Pagination. Remove <code>at-pagination</code></h3>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <table at-table="vm.filteredList" at-pagination>
+                                                <tbody>
+                                                    <tr>
+                                                        <td at-sortable at-attribute="name" at-title="Name"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <article class="markdown-body">
+                                                <div class="highlight highlight-html">
+                                                    <pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.filteredList<span class="pl-pds">"</span></span>&gt;
   &lt;<span class="pl-ent">tbody</span>&gt;
     &lt;<span class="pl-ent">tr</span>&gt;
       &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Name<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
     &lt;/<span class="pl-ent">tr</span>&gt;
   &lt;/<span class="pl-ent">tbody</span>&gt;
-&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
-</article>
-                        </div>
-                      </div>
-
-                    <div tab-title="Code">
-                      
+&lt;/<span class="pl-ent">table</span>&gt;</pre>
+                                                </div>
+                                            </article>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </angular-tabs>
                     </div>
-                  </div>                  
-              </angular-tabs>
+                    <div tab-title="API Pagination">
+                        <br>
+                        <angular-tabs id="apiPaginationTabs" active-tab="Result">
+                            <br>
+                            <div tab-title="Result">
+                                <table at-table="vm.filteredList" at-pagination="5" at-load at-change="vm.changePage">
+                                    <tbody>
+                                        <tr>
+                                            <td at-sortable at-attribute="name" at-title="Name"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div tab-title="Code">
+
+                            </div>
+                        </angular-tabs>
+                    </div>
+                </angular-tabs>
             </div>
-
-          </angular-tabs>
-        </div>
-      </section>
+        </section>
     </div>
-
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Angular-table-restful maintained by <a href="https://github.com/mateusmcg">mateusmcg</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
+        <footer class="inner">
+            <p class="copyright">Angular-table-restful maintained by <a href="https://github.com/mateusmcg">mateusmcg</a></p>
+            <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+        </footer>
     </div>
 
-    
-
-  </body>
-
-  <!-- Controllers -->
-  <script type="text/javascript" src="controllers/basicExampleCtrl.js"></script>
-  <script type="text/javascript" src="controllers/customizingCtrl.js"></script>
-  <script type="text/javascript" src="controllers/interactiveExampleCtrl.js"></script>
-
+</body>
+<!-- Controllers -->
+<script type="text/javascript" src="controllers/basicExampleCtrl.js"></script>
+<script type="text/javascript" src="controllers/customizingCtrl.js"></script>
+<script type="text/javascript" src="controllers/interactiveExampleCtrl.js"></script>
 </html>
