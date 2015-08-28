@@ -629,7 +629,7 @@
             var header, thead;
             thead = this.element.find("thead");
             if (thead.length == 0) {
-                thead = $('<thead></thead>')
+                thead = angular.element('<thead></thead>');
                 this.element.prepend(thead);
             }
 
@@ -647,7 +647,7 @@
         Table.prototype.setupFooter = function () {
             var tfoot = this.element.find('tfoot');
             if (tfoot.length == 0) {
-                tfoot = $('<tfoot></tfoot>')
+                tfoot = angular.element('<tfoot></tfoot>');
                 this.element.append(tfoot);
             }
 
