@@ -1,19 +1,21 @@
 {
-	"0" : {
-		"name": "Jacob Stone"
-	},
-	"1" : {
-		"name": "Marion Dunlap"
-	},
-	"2" : {
-		"name": "Stacy Robinson"
-	},
-	"3" : {
-		"name": "Luis Chappell"
-	},
-	"4" : {
-		"name": "Kimberly Horne"
-	},
+	"pageItems" : [
+		{
+			"name": "Jacob Stone"
+		},
+		{
+			"name": "Marion Dunlap"
+		},
+		{
+			"name": "Stacy Robinson"
+		},
+		{
+			"name": "Luis Chappell"
+		},
+		{
+			"name": "Kimberly Horne"
+		}
+	],
 	"totalCount": 15,
 	"pageNo": 3
 }

@@ -3,8 +3,8 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
 
   vm.changePage = changePage;
 
-  //You must have this function in your controller in order for the API Pagination to work.
-  //Also the 'successData.data' object(each page) must have two properties despite the data.
+  //You must have a function specified on the 'at-change' attribute in order for the API Pagination to work.
+  //Also the data that is passed to the 'deferred' must be an array with two more properties to work properly.
   //totalCount -> Total count of all items (e.g.: 3 pages with 5 items each, totalCount: 15).
   //pageNo -> The page that the API will retreive (same value that the pageInfo.pageNo has).
   function changePage(pageInfo, deferred){
@@ -15,11 +15,23 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
   	var page = 'page' + pageInfo.pageNo + '.json';
 
   	$http.get('api/' + page).then(function(successData){
-  		deferred.resolve(successData.data);
-      console.log(successData.data); //Also you can take a look at the api folder from this repo and see the json data.
+      var data = prepareData(successData.data);
+  		deferred.resolve(data);
+      console.log(data); //Also you can take a look at the api folder from this repo and see the json data.
   	}, function(errorData){
   		alert('Something went wrong with the API call :(');
   	});
+  }
+
+  //This function could be an interceptor, just treat the API result
+  function prepareData(data){
+    var extractedData = [];
+
+    extractedData = data.pageItems;
+    extractedData.totalCount = data.totalCount;
+    extractedData.pageNo = data.pageNo;
+
+    return extractedData;
   }
 
 }])

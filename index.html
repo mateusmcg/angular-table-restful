@@ -64,9 +64,52 @@
                         </div>
                       </div>
                       <div class="row">
+                        <h4>at-attribute</h4>
+                        <div class="col-md-12">
+                        <p>This attribute is responsible for binding the attribute to a header, creating the header automatically. e.g.:</p>
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>&gt;
+  &lt;<span class="pl-ent">tbody</span>&gt;
+    &lt;<span class="pl-ent">tr</span>&gt;      
+      &lt;<span class="pl-ent">td</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+    &lt;/<span class="pl-ent">tr</span>&gt;
+  &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>                        
+                        </div>
+                      </div>
+                      <div class="row">
+                        <h4>at-sortable</h4>
+                        <div class="col-md-12">
+                          <p>This attribute is responsible for enabling sort to the specific column. e.g.:</p>
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>&gt;
+  &lt;<span class="pl-ent">tbody</span>&gt;
+    &lt;<span class="pl-ent">tr</span>&gt;      
+      &lt;<span class="pl-ent">td</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span> <span class="pl-e">at-sortable</span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+    &lt;/<span class="pl-ent">tr</span>&gt;
+  &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <h4>at-title</h4>
+                        <div class="col-md-12">
+                          This attribute is responsible to add the header name for a specific column. In case its not defined the 
+                          <code>at-attribute</code> name will be used as the header name. e.g.:
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>&gt;
+  &lt;<span class="pl-ent">tbody</span>&gt;
+    &lt;<span class="pl-ent">tr</span>&gt;      
+      &lt;<span class="pl-ent">td</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Custom Name<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+    &lt;/<span class="pl-ent">tr</span>&gt;
+  &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>                          
+                        </div>
+                      </div>                       
+                      <div class="row">
                         <h4>at-paginated</h4>
                         <div class="col-md-12">
-                          <p>The attribute responsible for the pagination and the amount of itens to display per page (default 10). You can change the default value like this: at-paginated="5"</p>
+                          <p>The attribute responsible for the pagination and the amount of itens to display per page (default 10). You can change the default value like this: <code>at-paginated="5"</code></p>
                           <p>If you remove it, the pagination won't be rendered. e.g.:</p>
 <article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>&gt; <span class="pl-c">&lt;!-- or at-paginated="5" to display 5 items per page --&gt;</span>
     &lt;<span class="pl-ent">tbody</span>&gt;
@@ -108,26 +151,92 @@
                       <div class="row">
                         <h4>at-load</h4>
                         <div class="col-md-12">
+                          <p>If this attribute is used it will trigger the <code>at-change</code> function when the table is loaded for the first time loading the first page, so you won't need to load it manually. e.g.:</p>
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span> <span class="pl-e">at-load</span> <span class="pl-e">at-change</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.changePage<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            ...
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>                          
                         </div>
                       </div>
                       <div class="row">
                         <h4>at-pages-to-show</h4>
                         <div class="col-md-12">
+                          <p>Number of pages that will be displayed in the pagination (default: 5). e.g.:</p>
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span> <span class="pl-e">at-pages-to-show</span>=<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            ...
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>                          
                         </div>
                       </div>
                       <div class="row">
                         <h4>at-scroll</h4>
                         <div class="col-md-12">
+                          <p>This attribute is responsible for disabling the horizontal scroll that appears when the page is too small(phones/tablets). By default the table has this enabled for a responsive layout. e.g.:</p>
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span> <span class="pl-e">at-scroll</span>=<span class="pl-s"><span class="pl-pds">"</span>false<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            ...
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>                          
                         </div>
                       </div>
                       <div class="row">
                         <h4>at-ellipsis</h4>
-                        <div class="col-md-12">
+                        <div class="col-md-12">                      
+                          <p>When the content of a cell is too large the ellipsis gets triggered by default, adding a '...' at the end of that cell. The entire text is displayed when the user pass the mouse over the cell.</p>
+                          <p>For this to work you must add some css to your project. e.g.:</p>
+                          <h3>HTML</h3>
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span> <span class="pl-e">at-ellipsis</span>=<span class="pl-s"><span class="pl-pds">"</span>false<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            ...
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>
+                          <h3>CSS</h3>
+<article class="markdown-body"><div class="highlight highlight-css"><pre><span class="pl-e">.text-ellipsis</span> {
+            <span class="pl-c1"><span class="pl-c1">max-width</span></span>: <span class="pl-c1">250<span class="pl-k">px</span></span>;
+            <span class="pl-c1"><span class="pl-c1">white-space</span></span>: <span class="pl-c1">nowrap</span>;
+            <span class="pl-c1"><span class="pl-c1">overflow</span></span>: <span class="pl-c1">hidden</span>;
+            <span class="pl-c1"><span class="pl-c1">text</span>-<span class="pl-c1">overflow</span></span>: <span class="pl-c1">ellipsis</span>;
+        }
+
+            <span class="pl-e">.text-ellipsis</span><span class="pl-e">:hover</span> {
+                <span class="pl-c1"><span class="pl-c1">text</span>-<span class="pl-c1">overflow</span></span>: initial;
+                <span class="pl-c1"><span class="pl-c1">white-space</span></span>: <span class="pl-c1">normal</span>;
+            }</pre></div>
+</article>
                         </div>
                       </div>
                       <div class="row">
                         <h4>at-ignore-header</h4>
                         <div class="col-md-12">
+                          This attribute is responsible for unbinding the <code>at-attribute</code> header. When this attribute is specified it will render only the <code>thead</code> that is written explicitly in the html. e.g.:
+<article class="markdown-body"><div class="highlight highlight-html"><pre><span class="pl-c">&lt;!-- Keep in mind that you can add ng-if/ng-show or anything that you want to make the table that matches your needs --&gt;</span>
+&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">thead</span> <span class="pl-e">at-ignore-header</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt; <span class="pl-c">&lt;!-- Some custom header, like a checkbox to check all items or make a group header separator--&gt;</span>&lt;/<span class="pl-ent">th</span>&gt;
+        &lt;/<span class="pl-ent">tr</span>&gt;        
+    &lt;/<span class="pl-ent">thead</span>&gt;
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;<span class="pl-c">&lt;!-- Some custom item, like a checkbox or a group of headers --&gt;</span>&lt;/<span class="pl-ent">td</span>&gt;
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>
                         </div>
                       </div>
                     </div>
@@ -185,27 +294,46 @@
                             <br>
                             <div tab-title="Result">
                                 <div class="row" ng-controller="interactiveExampleCtrl as vm">
-                                    <div class="col-md-7">
-                                        <table at-table="vm.filteredList" at-paginated={{vm.itemsPerPage}} at-pages-to-show={{vm.pagesToShow}}>
-                                            <tbody>
-                                                <tr>
-                                                    <td at-sortable at-attribute="index" at-title="Index"></td>
-                                                    <td at-sortable at-attribute="name" at-title="Name"></td>
-                                                    <td at-sortable at-attribute="email" at-title="Email"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <h4>Add</h4>
-                                        <div class="input-group col-lg-6">
-                                            <input type="text" class="form-control" ng-model="vm.nameToAdd">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default btn-success" type="button" ng-click="vm.add()">Add</button>
-                                            </span>
+                                    <div class="col-md-12">
+                                      <div class="row">
+                                        <div class="col-md-4">
+                                          <label>Items per page (default 10)</label>
+                                          <input type="text" class="form-control" ng-model="vm.itemsPerPage">
                                         </div>
-                                        <h4>Filter</h4>
-                                        <input type="text" class="form-control" ng-model="vm.query" ng-change="vm.updateFilteredList()">
+                                        <div class="col-md-4">
+                                          <label>Pages to show in pagination</label>
+                                          <input type="text" class="form-control" ng-model="vm.pagesToShow">
+                                        </div>
+                                        <div class="col-md-4">
+                                        </div>                                        
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-md-4">
+                                        </div>
+                                        <div class="col-md-4">
+                                        </div>
+                                        <div class="col-md-4">
+                                        </div>                                        
+                                      </div>
+                                    </div>
+                                    <div class="col-md-12" ng-if="vm.tableData">
+                                      <div class="input-group col-lg-6">
+                                          <input type="text" class="form-control" ng-model="vm.nameToAdd">
+                                          <span class="input-group-btn">
+                                              <button class="btn btn-default btn-success" type="button" ng-click="vm.add()">Add</button>
+                                          </span>
+                                      </div>                                    
+                                      <h4>Filter</h4>
+                                      <input type="text" class="form-control" ng-model="vm.query" ng-change="vm.updateFilteredList()">
+                                      <table at-table="vm.tableData" at-paginated={{vm.itemsPerPage}} at-pages-to-show={{vm.pagesToShow}}>
+                                        <tbody>
+                                            <tr>
+                                                <td at-sortable at-attribute="index" at-title="Index"></td>
+                                                <td at-sortable at-attribute="name" at-title="Name"></td>
+                                                <td at-sortable at-attribute="email" at-title="Email"></td>
+                                            </tr>
+                                        </tbody>
+                                      </table>                                        
                                     </div>
                                 </div>
                             </div>
@@ -216,14 +344,14 @@
                     </div>
                     <div tab-title="Customizing">
                         <br>
-                        <angular-tabs id="customTabs" active-tab="Result">
+                        <angular-tabs id="customTabs" active-tab="Result/Code">
                             <br>
                             <div tab-title="Result/Code">
                                 <div class="row" ng-controller="customizingCtrl as vm">
                                     <h3>No Pagination. Remove <code>at-pagination</code></h3>
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <table at-table="vm.filteredList" at-pagination>
+                                            <table at-table="vm.list" at-pagination>
                                                 <tbody>
                                                     <tr>
                                                         <td at-sortable at-attribute="name" at-title="Name"></td>
