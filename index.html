@@ -86,7 +86,7 @@
                                     <article class="markdown-body">
                                         <div class="highlight highlight-javascript">
                                             <pre>angular.<span class="pl-c1">module</span>(<span class="pl-s"><span class="pl-pds">"</span>angular-table-restful-example<span class="pl-pds">"</span></span>).<span class="pl-c1">controller</span>(<span class="pl-s"><span class="pl-pds">"</span>basicExampleCtrl<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">"</span>$scope<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">$scope</span>) {
-                                            <span class="pl-k">var</span> vm <span class="pl-k">=</span> <span class="pl-v">this</span>;
+    <span class="pl-k">var</span> vm <span class="pl-k">=</span> <span class="pl-v">this</span>;
     vm.<span class="pl-c1">list</span> <span class="pl-k">=</span> $scope.$parent.<span class="pl-c1">personList</span>;
 }]);</pre>
                                         </div>
@@ -171,7 +171,7 @@
                             <br>
                             <div tab-title="Result">
                               <div class="row" ng-controller="apiCtrl as vm">
-                                <table at-table="vm.list" at-paginated at-load at-change="vm.changePage">
+                                <table at-table="vm.list" at-paginated="5" at-load at-change="vm.changePage">
                                     <tbody>
                                         <tr>
                                             <td at-sortable at-attribute="name" at-title="Name"></td>
