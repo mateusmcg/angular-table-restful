@@ -1,19 +1,9 @@
 {
-	"0":[
-		"Jacob Stone"
-	],
-	"1": [
-		"Marion Dunlap"
-	],
-	"2":[ 
-		"Stacy Robinson"
-	],
-	"3":[ 
-		"Luis Chappell"
-	],
-	"4":[ 
-		"Kimberly Horne"
-	],
+	"0":"Jacob Stone",
+	"1":"Marion Dunlap",
+	"2":"Stacy Robinson",
+	"3":"Luis Chappell",
+	"4":"Kimberly Horne",
 	"totalCount": 15,
 	"pageNo": 3
 }

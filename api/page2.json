@@ -1,19 +1,9 @@
 {
-    "0": [
-        "Janet Bolton"
-    ],
-	"1": [
-		"Maria Liu"
-	],
-	"2":[ 
-		"Anne Warren"
-	],
-	"3":[ 
-		"Keith Steele"
-	],
-	"4":[ 
-		"Jerome Lyons"
-	],
+    "0":"Janet Bolton",
+	"1":"Maria Liu",
+	"2":"Anne Warren",
+	"3":"Keith Steele",
+	"4":"Jerome Lyons",
 	"totalCount": 15,
 	"pageNo": 2	
 }

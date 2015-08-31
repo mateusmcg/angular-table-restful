@@ -1,19 +1,9 @@
 {	
-	"0":[
-		"Kristin Hill"
-	],
-	"1": [
-		"Valerie Francis"
-	],
-	"2":[ 
-		"Bob Abbott"
-	],
-	"3":[ 
-		"Greg Boyd"
-	],
-	"4":[ 
-		"Peggy Massey"
-	],
+	"0":"Kristin Hill",
+	"1": "Valerie Francis",
+	"2": "Bob Abbott",
+	"3": "Greg Boyd",
+	"4":"Peggy Massey",
 	"totalCount": 15,
 	"pageNo": 1		
 }
