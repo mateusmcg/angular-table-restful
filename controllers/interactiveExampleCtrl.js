@@ -1,4 +1,4 @@
-angular.module("angular-table-restful-example").controller("interactiveExampleCtrl", ["$scope", "$filter", function($scope, $filter) {
+angular.module("angular-table-restful-example").controller("interactiveExampleCtrl", ["$scope", "$filter", '$timeout', function($scope, $filter, $timeout) {
 
   var vm = this;	
 
@@ -22,7 +22,10 @@ angular.module("angular-table-restful-example").controller("interactiveExampleCt
 
   function loadTable(){
     vm.tableData = null;
-    vm.tableData = $scope.$parent.personList;
+
+    $timeout(function(){
+      vm.tableData = $scope.$parent.personList;
+    }, 100);    
   };
-  
+
 }])
