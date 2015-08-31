@@ -14,13 +14,15 @@ angular.module("angular-table-restful-example").controller("interactiveExampleCt
   function add() {
     vm.originalList.push({name: vm.nameToAdd});
     vm.updateFilteredList();
-  }
+  };
 
   function updateFilteredList() {
     vm.tableData = $filter("filter")(vm.originalList, vm.query);
   };
 
   function loadTable(){
+    vm.tableData = null;
     vm.tableData = $scope.$parent.personList;
-  }
+  };
+  
 }])
