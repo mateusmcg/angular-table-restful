@@ -84,6 +84,51 @@ angular.module("angular-table-restful-example")
         index: 16,
         name: "Andy Smith",
         email: "andy@smith.com"
+      },
+      {
+        index: 17,
+        name: "Kimberly Horne",
+        email: "kimberly@horne.com"
+      },
+      {
+        index: 18,
+        name: "Andy Smith",
+        email: "andy@smith.com"
+      },
+      {
+        index: 19,
+        name: "Kimberly Horne",
+        email: "kimberly@horne.com"
+      },
+      {
+        index: 20,
+        name: "Andy Smith",
+        email: "andy@smith.com"
+      },
+      {
+        index: 21,
+        name: "Kimberly Horne",
+        email: "kimberly@horne.com"
+      },
+      {
+        index: 22,
+        name: "Andy Smith",
+        email: "andy@smith.com"
+      },
+      {
+        index: 23,
+        name: "Andy Smith",
+        email: "andy@smith.com"
+      },
+      {
+        index: 24,
+        name: "Andy Smith",
+        email: "andy@smith.com"
+      },
+      {
+        index: 25,
+        name: "Andy Smith",
+        email: "andy@smith.com"
       }
     ]
 }

@@ -46,8 +46,92 @@
     <div id="main_content_wrap" class="outer">
         <section id="main_content" ng-app="angular-table-restful-example" ng-controller="example-ctrl">
             <div class="container">
-                <angular-tabs id="mainTabs" active-tab="Basic Example">
-                    <div tab-title="Basic Example" active-tab="Result">
+                <angular-tabs id="mainTabs" active-tab="Content">
+                    <div tab-title="Content">
+                      <br>
+                      <div class="row">
+                        <h4>at-table</h4>
+                        <div class="col-md-12">
+                          <p>The attribute that will receive the list from the controller. e.g.:</p>
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            ...
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>                          
+                        </div>
+                      </div>
+                      <div class="row">
+                        <h4>at-paginated</h4>
+                        <div class="col-md-12">
+                          <p>The attribute responsible for the pagination and the amount of itens to display per page (default 10). You can change the default value like this: at-paginated="5"</p>
+                          <p>If you remove it, the pagination won't be rendered. e.g.:</p>
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>&gt; <span class="pl-c">&lt;!-- or at-paginated="5" to display 5 items per page --&gt;</span>
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            ...
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <h4>at-change</h4>
+                        <div class="col-md-12">
+                          <p>The attribute responsible to trigger the <b>API Pagination</b>. It receives a function to be called when the page/sort changes. e.g.:</p>
+                          <h3>HTML</h3>
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span> <span class="pl-e">at-change</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.changePage<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            ...
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>
+                          <h3>Javascript</h3>
+<article class="markdown-body"><div class="highlight highlight-javascript"><pre>angular.<span class="pl-c1">module</span>(<span class="pl-s"><span class="pl-pds">"</span>angular-table-restful-example<span class="pl-pds">"</span></span>).<span class="pl-c1">controller</span>(<span class="pl-s"><span class="pl-pds">"</span>apiCtrl<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">"</span>$http<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">$http</span>) {
+  <span class="pl-k">var</span> vm <span class="pl-k">=</span> <span class="pl-v">this</span>;    
+
+  vm.<span class="pl-c1">changePage</span> <span class="pl-k">=</span> changePage;
+
+  <span class="pl-k">function</span> <span class="pl-en">changePage</span>(<span class="pl-smi">pageInfo</span>, <span class="pl-smi">deferred</span>){
+    <span class="pl-c">//make API call here...</span>
+  }
+
+}])</pre></div>
+</article>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <h4>at-load</h4>
+                        <div class="col-md-12">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <h4>at-pages-to-show</h4>
+                        <div class="col-md-12">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <h4>at-scroll</h4>
+                        <div class="col-md-12">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <h4>at-ellipsis</h4>
+                        <div class="col-md-12">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <h4>at-ignore-header</h4>
+                        <div class="col-md-12">
+                        </div>
+                      </div>
+                    </div>
+                    <div tab-title="Basic Example">
                         <br>
                         <angular-tabs id="basicExampleTabs" active-tab="Result">
                             <br>
@@ -171,6 +255,17 @@
                             <br>
                             <div tab-title="Result">
                               <div class="row" ng-controller="apiCtrl as vm">
+                                <table at-table="vm.list" at-paginated="5" at-load at-change="vm.changePage">
+                                    <tbody>
+                                        <tr>
+                                            <td at-sortable at-attribute="name" at-title="Name"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>                              
+                              </div>
+                            </div>
+                            <div tab-title="Code">
+                            <h4>HTML</h4>
 <article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>=<span class="pl-s"><span class="pl-pds">"</span>5<span class="pl-pds">"</span></span> <span class="pl-e">at-load</span> <span class="pl-e">at-change</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.changePage<span class="pl-pds">"</span></span>&gt;
     &lt;<span class="pl-ent">tbody</span>&gt;
         &lt;<span class="pl-ent">tr</span>&gt;
@@ -179,9 +274,7 @@
     &lt;/<span class="pl-ent">tbody</span>&gt;
 &lt;/<span class="pl-ent">table</span>&gt;</pre></div>
 </article>
-                              </div>
-                            </div>
-                            <div tab-title="Code">
+                            <h4>Javascript</h4>                            
 <article class="markdown-body"><div class="highlight highlight-javascript"><pre>angular.<span class="pl-c1">module</span>(<span class="pl-s"><span class="pl-pds">"</span>angular-table-restful-example<span class="pl-pds">"</span></span>).<span class="pl-c1">controller</span>(<span class="pl-s"><span class="pl-pds">"</span>apiCtrl<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">"</span>$http<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">$http</span>) {
   <span class="pl-k">var</span> vm <span class="pl-k">=</span> <span class="pl-v">this</span>;    
 
