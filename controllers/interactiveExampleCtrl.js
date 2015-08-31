@@ -3,13 +3,13 @@ angular.module("angular-table-restful-example").controller("interactiveExampleCt
   var vm = this;	
 
   vm.originalList = $scope.$parent.personList;
-  vm.filteredList = vm.originalList;
 
   vm.itemsPerPage = 5;
   vm.pagesToShow = 2;
 
   vm.add = add;
   vm.updateFilteredList = updateFilteredList;
+  vm.loadTable = loadTable;
 
   function add() {
     vm.originalList.push({name: vm.nameToAdd});
@@ -17,6 +17,10 @@ angular.module("angular-table-restful-example").controller("interactiveExampleCt
   }
 
   function updateFilteredList() {
-    vm.filteredList = $filter("filter")(vm.originalList, vm.query);
+    vm.tableData = $filter("filter")(vm.originalList, vm.query);
   };
+
+  function loadTable(){
+    vm.tableData = $scope.$parent.personList;
+  }
 }])
