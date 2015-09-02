@@ -292,8 +292,8 @@
             this.paginated = this.attributes.atPaginated != null;
             this.list = this.attributes.atTable;
             this.atChange = this.attributes.atChange;
-            this.createColumnConfigurations();
             this.atTableConfig = atTableConfig;
+            this.createColumnConfigurations();
         }
 
         TableConfiguration.prototype.capitaliseFirstLetter = function (string) {
@@ -860,7 +860,6 @@
         return PageSequence;
 
     })();
-    
     angular.module("angular-table").directive("atTable", ["$filter", '$q', '$rootScope', '$compile', 'atTableConfig', function ($filter, $q, $rootScope, $compile, atTableConfig) {
         return {
             restrict: "AC",
