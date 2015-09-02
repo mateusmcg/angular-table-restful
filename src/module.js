@@ -1,4 +1,4 @@
-    angular.module("angular-table").directive("atTable", ["$filter", '$q', '$rootScope', '$compile', function ($filter, $q, $rootScope, $compile) {
+    angular.module("angular-table").directive("atTable", ["$filter", '$q', '$rootScope', '$compile', 'atTableConfig', function ($filter, $q, $rootScope, $compile, atTableConfig) {
         return {
             restrict: "AC",
             scope: true,
@@ -15,12 +15,12 @@
 
                 trElement.attr('ng-class', "{'table-selected-row' : item == atConfig.selectedItem}");
 
-                tc = new TableConfiguration(element, attributes);
-                table = new Table(element, tc);
+                tc = new TableConfiguration(element, attributes, atTableConfig);
+                table = new Table(element, tc, atTableConfig);
                 table.compile();
                 return {
                     post: function ($scope, $element, $attributes) {
-                        table.post($scope, $element, $attributes, $filter, $q, $rootScope);
+                        table.post($scope, $element, $attributes, $filter, $q, $rootScope, atTableConfig);
 
                         $scope.markSelected = function (item) {
                             if (this.atConfig.selectedItem != item) {
@@ -39,25 +39,16 @@
                             pagination.insertAfter(scroll).addClass('text-center');
 
                             function destroy() {
-                                if (scroll && pagination) {
-                                    var s = scroll;
-                                    var p = pagination;
-                                    scroll = null;
-                                    pagination = null;
-                                    s.remove();
-                                    p.remove();
-                                    return;
-                                }
+                                var s = scroll;
+                                var p = pagination;
+                                scroll = null;
+                                pagination = null;
 
-                                if (scroll) {
-                                    var s = scroll;
-                                    scroll = null;
+                                if (s) {
                                     s.remove();
                                 }
 
-                                if (pagination) {
-                                    var p = pagination;
-                                    pagination = null;
+                                if (p) {
                                     p.remove();
                                 }
                             };
