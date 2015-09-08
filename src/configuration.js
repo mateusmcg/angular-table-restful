@@ -87,7 +87,7 @@
                 tableData = {
                     changeEvent: tableData
                 };
-            } else if (typeof tableData !== 'object' || typeof tableData === 'undefined') {
+            } else if (_.isArray(tableData) || typeof tableData === 'undefined') {
                 //Data in memory
                 scope.isMemory = true;
                 tableData = {};
