@@ -13,7 +13,7 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
 * Use [bower](http://bower.io/) to install the package: 
 
     ```shell
-      bower install angular-table-restful --save
+    bower install angular-table-restful --save
     ```
 
 * Or manually add the .js file to your page:
@@ -25,7 +25,7 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
 * Include module dependency:
 
    ```javascript
-      angular.module('yourApp', ['angular-table']);
+   angular.module('yourApp', ['angular-table']);
    ```
 ======
 
@@ -66,22 +66,22 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
 
 #### atIgnoreHeader
 
-   - This attribute is responsible for unbinding the ```shell at-attribute```  header, rendering only the ```shell thead``` that is written explicitly in the html allowing you to customize the header the way you want it. e.g.:
-       ```html
-        <!-- Keep in mind that you can add ng-if/ng-show or anything that you want to make the table that matches your needs -->
-        <table at-table="vm.myList">
-            <thead at-ignore-header>
-                <tr>
-                    <th> <!-- Some custom header, like a checkbox to check all items or make a group header separator--></th>
-                </tr>        
-            </thead>
-            <tbody>
-                <tr>
-                    <td><!-- Some custom item, like a checkbox or a group of headers --></td>
-                </tr>
-            </tbody>
-        </table>
-       ```
+   - This attribute is responsible for unbinding the ```at-attribute```  header, rendering only the ```thead``` that is written explicitly in the html allowing you to customize the header the way you want it. e.g.:
+```html
+<!-- Keep in mind that you can add ng-if/ng-show or anything that you want to make the table that matches your needs -->
+<table at-table="vm.myList">
+<thead at-ignore-header>
+    <tr>
+        <th> <!-- Some custom header, like a checkbox to check all items or make a group header separator--></th>
+    </tr>        
+</thead>
+<tbody>
+    <tr>
+        <td><!-- Some custom item, like a checkbox or a group of headers --></td>
+    </tr>
+</tbody>
+</table>
+```
 
 #### atTitle
 
@@ -94,39 +94,39 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
 #### atScroll
 
    - This attribute is responsible for adding a horizontal scroll to the table for responsive purposes. By default if you resize your browser you'll see the scroll, if you don't want it you need to add this attribute and set it to false. e.g.:
-       ```html
-        <table at-scroll="false">
-       ```
+```html
+<table at-scroll="false">
+```
 
 #### atEllipsis
 
    - This attribute is responsible for adding a '...' at the end of each cell when it's content is too large. e.g.:
-        ```html
-        <table at-ellipsis="false">
-        ```
+```html
+<table at-ellipsis="false">
+```
 
 #### atLoadOnStartup
 
    - (API Pagination only) This attribute is responsible for loading the table when the page is loaded, triggering the changeEvent function. e.g.:
        + 1st way:
-           ```html
-           <table at-load-on-startup>
-           ```
+```html
+<table at-load-on-startup>
+```
        + 2nd way:
-           Inside the controller, at the ```shell vm.myTableConfig``` add the following attribute:
-           ```javascript
-            vm.myTableConfig = {
-                ...                
-                loadOnStartup: true
-            };
-           ```
+           Inside the controller, at the ```vm.myTableConfig``` add the following attribute:
+```javascript
+vm.myTableConfig = {
+    ...                
+    loadOnStartup: true
+};
+```
 
 #### atPagesToShow
 
    - (API Pagination only) This attribute is responsible for the number of pages that will be displayed in the pagination (default: 5). e.g.:
-        ```html
-        <table at-pages-to-show="10">
-        ```
+```html
+<table at-pages-to-show="10">
+```
    
 #### Example:
 
@@ -178,8 +178,19 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
     ```
     
     + Controller
-        * ```shell vm.myTableConfig``` must have a changeEvent function that will be triggered for the API Pagination to work.
-        * At the success callBack from the API call you need to treat the data, because the angular-table-restful expects to receive an Array with two more attribute (totalCount and pageNo). The ```shell prepareData ``` function shows how to handle the data properly. Keep in mind that this treatment should be done by an [interceptor](https://docs.angularjs.org/api/ng/service/$http).
+        * ```vm.myTableConfig``` must have a changeEvent function that will be triggered for the API Pagination to work.
+        * At the success callBack from the API call you need to treat the data, because the angular-table-restful expects to receive an Array with two more attribute (totalCount and pageNo). The ```prepareData ```function shows how to handle the data properly. Keep in mind that this treatment should be done by an [interceptor](https://docs.angularjs.org/api/ng/service/$http).
+        * Also you can access a lot of the table's functionalities from your controller through the ```vm.myTableConfig``` because the angular-table-restful injects methods and attributes to it, making data manipulation easy. e.g.:
+            - clearData -> Function to clear all table items.
+            - hasData -> Function that verifies if the table has items.
+            - refresh -> Function that updates the table and goes back to 1st page (triggers the changeEvent).
+            - refreshAndKeepCurrentPage -> Same as refresh but the table stays at the current page.
+            - refreshAndGoToLastPage -> Same as refresh but the table goes to the last page.
+            - predicates -> List of all the current predicates of the table.
+            - sortList -> List of all columns that are sorting the table.
+            - currentPage -> Attribute that has the currentPage of the table
+            
+            - There are some other functionalities that will be useful to you when using the table but the most important are listed above.
         
     ```javascript
         angular.module("angular-table-restful-example")
@@ -206,7 +217,11 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
                 var extractedData = [];
 
                 extractedData = data.pageItems;
+
+                //totalCount -> Total count of all items (e.g.: 3 pages with 5 items each, totalCount: 15).
                 extractedData.totalCount = data.totalCount;
+
+                //pageNo -> The page that the API will retreive (same value that the pageInfo.pageNo has).
                 extractedData.pageNo = data.pageNo;
 
                 return extractedData;
