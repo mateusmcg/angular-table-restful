@@ -16,10 +16,11 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
     bower install angular-table-restful --save
     ```
 
-* Or manually add the .js file to your page:
+* Or manually add the following files to your page:
 
     ```shell
-    <script src='assets/libs/angular-table-restful/angular-table.js'></script>
+    <link rel="stylesheet" href="../angular-table-restful.css">
+    <script src='../angular-table-restful.js'></script>
     ```
 
 * Include module dependency:
@@ -100,7 +101,7 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
 
 #### atEllipsis
 
-   - This attribute is responsible for adding a '...' at the end of each cell when it's content is too large. e.g.:
+   - This attribute is responsible for adding a '...' at the end of each cell when it's content is too large. Its a default behavior, in case you don't want it add the attribute and set it to false. e.g.:
 ```html
 <table at-ellipsis="false">
 ```
@@ -112,8 +113,10 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
 ```html
 <table at-load-on-startup>
 ```
+
        + 2nd way:
            Inside the controller, at the ```vm.myTableConfig``` add the following attribute:
+
 ```javascript
 vm.myTableConfig = {
     ...                
