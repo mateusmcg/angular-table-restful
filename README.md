@@ -110,19 +110,18 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
 
    - (API Pagination only) This attribute is responsible for loading the table when the page is loaded, triggering the changeEvent function. e.g.:
        + 1st way:
-```html
-<table at-load-on-startup>
-```
-
+    ```html
+    <table at-load-on-startup>
+    ```
        + 2nd way:
-           Inside the controller, at the ```vm.myTableConfig``` add the following attribute:
+          Inside the controller, at the ```vm.myTableConfig``` add the following attribute:
 
-```javascript
-vm.myTableConfig = {
-    ...                
-    loadOnStartup: true
-};
-```
+    ```javascript
+    vm.myTableConfig = {
+        ...                
+        loadOnStartup: true
+    };
+    ```
 
 #### atPagesToShow
 
