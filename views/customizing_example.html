@@ -1,24 +1,71 @@
 <div class="row" ng-controller="customizingCtrl as vm">
+
     <h3>No Pagination. Remove <code>at-paginated</code></h3>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <table at-table="vm.list">
                 <tbody>
                     <tr>
-                        <td at-sortable at-attribute="name" at-title="Name"></td>
+                        <td at-sortable at-attribute="name"></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="col-md-9">
-            <article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span>&gt;
-&lt;<span class="pl-ent">tbody</span>&gt;
-&lt;<span class="pl-ent">tr</span>&gt;
-&lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Name<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
-&lt;/<span class="pl-ent">tr</span>&gt;
-&lt;/<span class="pl-ent">tbody</span>&gt;
+        <div class="col-md-8">
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
 &lt;/<span class="pl-ent">table</span>&gt;</pre></div>
 </article>
+        </div>
+    </div>
+
+    <h3>For custom header name use: <code>at-title</code></h3>
+    <div class="row">
+        <div class="col-md-4">
+            <table at-table="vm.list">
+                <tbody>
+                    <tr>
+                        <td at-sortable at-attribute="name" at-title="A Custom Header for the 'name' Column"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-8">
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>A Custom Header for the 'name' Column<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>        
+        </div>
+    </div>
+
+    <h3>No sort. Remove <code>at-sortable</code></h3>
+    <div class="row">
+        <div class="col-md-4">
+            <table at-table="vm.list">
+                <tbody>
+                    <tr>
+                        <td at-attribute="name"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-8">
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            &lt;<span class="pl-ent">td</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>        
         </div>
     </div>
 </div>
