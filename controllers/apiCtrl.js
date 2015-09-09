@@ -8,7 +8,7 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
   //Keep in mind that without the 'changeEvent' function, the API Pagination will NOT work.
   vm.myTableConfig = {
     changeEvent: tableChangeEvt,
-    loadOnStartup: true //Make sure to load the table when page loads.
+    loadOnStartup: true //Responsible to load the table when page loads.
   };
 
   function tableChangeEvt(pageInfo, deferred) {
@@ -40,6 +40,8 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
     return extractedData;
   }
 
+  //These are some examples of functionalities that you can use.
+  //For a full view check out the 'vm.myTableConfig' object at the console log or the docs.
   function refresh(){
     vm.myTableConfig.refresh();
   }
