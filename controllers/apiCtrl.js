@@ -2,7 +2,7 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
   var vm = this;
 
   vm.myTableConfig = {
-      changeEvent: tableChangeEvt
+      changeEvent: tableChangeEvt,
       loadOnStartup: true //Make sure to load the table when page loads.
   };
 
