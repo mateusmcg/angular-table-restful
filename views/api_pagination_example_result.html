@@ -1,7 +1,9 @@
 <div class="row" ng-controller="apiCtrl as vm">
-	<div class="col-md-12" ng-if="vm.apiError" style="border: 1px red solid; background:#FAAFBE">
+	<div class="col-md-12" ng-if="vm.apiError" style="border: 1px red solid; background:#FAAFBE; margin-bottom:15px; padding: 15px;">
 		<span>Something went wrong with the API call :(</span>
 	</div>
+
+	<br />
 
 	<div class="col-md-12">
 	    <table at-table="vm.myTableConfig " at-paginated="5">

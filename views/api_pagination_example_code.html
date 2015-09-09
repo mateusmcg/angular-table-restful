@@ -1,48 +1,47 @@
 <h4>HTML</h4>
-<article class="markdown-body">
-    <div class="highlight highlight-html">
-        <pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.list<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>=<span class="pl-s"><span class="pl-pds">"</span>5<span class="pl-pds">"</span></span> <span class="pl-e">at-load</span> <span class="pl-e">at-change</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.changePage<span class="pl-pds">"</span></span>&gt;
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.myTableConfig <span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>=<span class="pl-s"><span class="pl-pds">"</span>5<span class="pl-pds">"</span></span>&gt;
     &lt;<span class="pl-ent">tbody</span>&gt;
         &lt;<span class="pl-ent">tr</span>&gt;
             &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Name<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
         &lt;/<span class="pl-ent">tr</span>&gt;
     &lt;/<span class="pl-ent">tbody</span>&gt;
-&lt;/<span class="pl-ent">table</span>&gt;</pre>
-                                    </div>
-                                </article>
-                                <h4>Javascript</h4>
-<article class="markdown-body"><div class="highlight highlight-javascript"><pre>angular.<span class="pl-c1">module</span>(<span class="pl-s"><span class="pl-pds">"</span>angular-table-restful-example<span class="pl-pds">"</span></span>).<span class="pl-c1">controller</span>(<span class="pl-s"><span class="pl-pds">"</span>apiCtrl<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">"</span>$http<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">$http</span>) {
-  <span class="pl-k">var</span> vm <span class="pl-k">=</span> <span class="pl-v">this</span>;    
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>
+<h4>Javascript</h4>
+<article class="markdown-body"><div class="highlight highlight-javascript"><pre>angular.module(<span class="pl-s"><span class="pl-pds">"</span>angular-table-restful-example<span class="pl-pds">"</span></span>).controller(<span class="pl-s"><span class="pl-pds">"</span>apiCtrl<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">"</span>$http<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">$http</span>) {
+  <span class="pl-k">var</span> vm <span class="pl-k">=</span> <span class="pl-v">this</span>;
 
-  vm.<span class="pl-c1">changePage</span> <span class="pl-k">=</span> changePage;
+  <span class="pl-c">//Keep in mind that without the 'changeEvent' function, the API Pagination will NOT work.</span>
+  vm.myTableConfig <span class="pl-k">=</span> {
+    changeEvent<span class="pl-k">:</span> tableChangeEvt,
+    loadOnStartup<span class="pl-k">:</span> <span class="pl-c1">true</span> <span class="pl-c">//Make sure to load the table when page loads.</span>
+  };
 
-  <span class="pl-c">//You must have a function specified on the 'at-change' attribute in order for the API Pagination to work.</span>
-  <span class="pl-c">//Also the data that is passed to the 'deferred' must be an array with two more properties to work properly.</span>
-  <span class="pl-c">//totalCount -&gt; Total count of all items (e.g.: 3 pages with 5 items each, totalCount: 15).</span>
-  <span class="pl-c">//pageNo -&gt; The page that the API will retreive (same value that the pageInfo.pageNo has).</span>
-  <span class="pl-k">function</span> <span class="pl-en">changePage</span>(<span class="pl-smi">pageInfo</span>, <span class="pl-smi">deferred</span>){
-    <span class="pl-c">//The pageInfo parameters will have the following information:</span>
-    <span class="pl-c">//  -&gt; pageNo (int)</span>
-    <span class="pl-c">//  -&gt; pageSize (int)</span>
-    <span class="pl-c">//  -&gt; sort (string array, e.g.: '-name' will order the list by name DESC and 'name' will order the list by name ASC)</span>
-    <span class="pl-k">var</span> page <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>page<span class="pl-pds">'</span></span> <span class="pl-k">+</span> pageInfo.<span class="pl-c1">pageNo</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>.json<span class="pl-pds">'</span></span>;
+  <span class="pl-k">function</span> <span class="pl-en">tableChangeEvt</span>(<span class="pl-smi">pageInfo</span>, <span class="pl-smi">deferred</span>) {
+    <span class="pl-c">//Take a look at it and see the functionalities that you can use.</span>
+    <span class="pl-en">console</span><span class="pl-c1">.log</span>(<span class="pl-s"><span class="pl-pds">'</span>vm.myTableConfig<span class="pl-pds">'</span></span>, vm.myTableConfig);
 
-    $http.<span class="pl-c1">get</span>(<span class="pl-s"><span class="pl-pds">'</span>api/<span class="pl-pds">'</span></span> <span class="pl-k">+</span> page).<span class="pl-c1">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">successData</span>){
-      <span class="pl-k">var</span> data <span class="pl-k">=</span> <span class="pl-c1">prepareData</span>(successData.<span class="pl-c1">data</span>);
-        deferred.<span class="pl-c1">resolve</span>(data);
-      <span class="pl-en">console</span><span class="pl-c1">.log</span>(data); <span class="pl-c">//Also you can take a look at the api folder from this repo and see the json data.</span>
+    <span class="pl-k">var</span> page <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>page<span class="pl-pds">'</span></span> <span class="pl-k">+</span> pageInfo.pageNo <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>.json<span class="pl-pds">'</span></span>;
+
+    $http.get(<span class="pl-s"><span class="pl-pds">'</span>api/<span class="pl-pds">'</span></span> <span class="pl-k">+</span> page).then(<span class="pl-k">function</span>(<span class="pl-smi">successData</span>){
+        <span class="pl-k">var</span> data <span class="pl-k">=</span> prepareData(successData.<span class="pl-c1">data</span>);
+        deferred.resolve(data);
     }, <span class="pl-k">function</span>(<span class="pl-smi">errorData</span>){
-        <span class="pl-c1">alert</span>(<span class="pl-s"><span class="pl-pds">'</span>Something went wrong with the API call :(<span class="pl-pds">'</span></span>);
+        vm.apiError <span class="pl-k">=</span> <span class="pl-c1">true</span>;
     });
   }
 
-  <span class="pl-c">//This function could be an interceptor, just treat the API result</span>
+  <span class="pl-c">//This function could be an interceptor, just treat the API response</span>
   <span class="pl-k">function</span> <span class="pl-en">prepareData</span>(<span class="pl-smi">data</span>){
     <span class="pl-k">var</span> extractedData <span class="pl-k">=</span> [];
 
-    extractedData <span class="pl-k">=</span> data.<span class="pl-c1">pageItems</span>;
-    extractedData.<span class="pl-c1">totalCount</span> <span class="pl-k">=</span> data.<span class="pl-c1">totalCount</span>;
-    extractedData.<span class="pl-c1">pageNo</span> <span class="pl-k">=</span> data.<span class="pl-c1">pageNo</span>;
+    extractedData <span class="pl-k">=</span> data.pageItems;
+
+    <span class="pl-c">//totalCount -&gt; Total count of all items (e.g.: 3 pages with 5 items each, totalCount: 15).</span>
+    extractedData.totalCount <span class="pl-k">=</span> data.totalCount;
+
+    <span class="pl-c">//pageNo -&gt; The page that the API will retreive (same value that the pageInfo.pageNo has).</span>
+    extractedData.pageNo <span class="pl-k">=</span> data.pageNo;
 
     <span class="pl-k">return</span> extractedData;
   }
