@@ -28,7 +28,7 @@
     <h3>For custom header name use: <code>at-title</code></h3>
     <div class="row">
         <div class="col-md-4">
-            <table at-table="vm.list">
+            <table at-table="vm.list" at-paginated="5">
                 <tbody>
                     <tr>
                         <td at-sortable at-attribute="name" at-title="A Custom Header for the 'name' Column"></td>
@@ -53,7 +53,7 @@
     <h3>No sort. Remove <code>at-sortable</code></h3>
     <div class="row">
         <div class="col-md-4">
-            <table at-table="vm.list">
+            <table at-table="vm.list" at-paginated="5">
                 <tbody>
                     <tr>
                         <td at-attribute="name"></td>

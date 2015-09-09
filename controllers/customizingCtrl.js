@@ -16,6 +16,15 @@ angular.module("angular-table-restful-example").controller("customizingCtrl", [f
 	  },
 	  {
 	  	name: "Peggy Massey"
+	  },
+	  {
+	  	name: "Jerome Lyons"
+	  },
+	  {
+	  	name: "Marion Dunlap"
+	  },
+	  {
+	  	name: "Stacy Robinson"
 	  }
 	];
 }])
