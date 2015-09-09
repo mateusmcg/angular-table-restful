@@ -1,4 +1,3 @@
-```javascript
 angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", function($http) {
   var vm = this;
 
