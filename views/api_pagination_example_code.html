@@ -11,6 +11,10 @@
 <article class="markdown-body"><div class="highlight highlight-javascript"><pre>angular.module(<span class="pl-s"><span class="pl-pds">"</span>angular-table-restful-example<span class="pl-pds">"</span></span>).controller(<span class="pl-s"><span class="pl-pds">"</span>apiCtrl<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">"</span>$http<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">$http</span>) {
   <span class="pl-k">var</span> vm <span class="pl-k">=</span> <span class="pl-v">this</span>;
 
+  vm.<span class="pl-c1">clear</span> <span class="pl-k">=</span> clear;
+  vm.refresh <span class="pl-k">=</span> refresh;
+  vm.hasData <span class="pl-k">=</span> hasData;
+
   <span class="pl-c">//Keep in mind that without the 'changeEvent' function, the API Pagination will NOT work.</span>
   vm.myTableConfig <span class="pl-k">=</span> {
     changeEvent<span class="pl-k">:</span> tableChangeEvt,
@@ -44,6 +48,18 @@
     extractedData.pageNo <span class="pl-k">=</span> data.pageNo;
 
     <span class="pl-k">return</span> extractedData;
+  }
+
+  <span class="pl-k">function</span> <span class="pl-en">refresh</span>(){
+    vm.myTableConfig.refresh();
+  }
+
+  <span class="pl-k">function</span> <span class="pl-en">clear</span>(){
+    vm.myTableConfig.clearData(); 
+  }
+
+  <span class="pl-k">function</span> <span class="pl-en">hasData</span>(){
+    <span class="pl-k">return</span> vm.myTableConfig.hasData(); 
   }
 
 }])</pre></div>

@@ -3,13 +3,11 @@
 		<span>Something went wrong with the API call :(</span>
 	</div>	
 
-	<div class="col-md-3">
-        <button type="button" class="btn btn-primary" ng-click="vm.clear()">Clear table</button>
+	<div class="col-md-12">
+        <button type="button" class="btn btn-primary col-md-2" ng-click="vm.clear()">Clear table</button>
+        <button type="button" class="btn btn-primary col-md-2" ng-click="vm.refresh()">Refresh</button>
+        <button type="button" class="btn btn-primary col-md-2" ng-disabled="true">Has data? {{vm.hasData()}}</button>
 	</div>
-
-	<div class="col-md-3">
-        <button type="button" class="btn btn-primary" ng-click="vm.refresh()">Refresh</button>
-	</div>	
 
 	<div class="col-md-12">		
 	    <table at-table="vm.myTableConfig " at-paginated="5">
