@@ -1,0 +1,41 @@
+<h4>HTML</h4>
+<article class="markdown-body"><div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.tableData<span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>=<span class="pl-s">{ {vm.itemsPerPage} }</span> <span class="pl-e">at-pages-to-show</span>=<span class="pl-s">{ {vm.pagesToShow} }</span>&gt;
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>index<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Index<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Name<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span> <span class="pl-e">at-sortable</span> <span class="pl-e">at-attribute</span>=<span class="pl-s"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span> <span class="pl-e">at-title</span>=<span class="pl-s"><span class="pl-pds">"</span>Email<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</article>
+                            <h4>Javascript</h4>
+<article class="markdown-body"><div class="highlight highlight-javascript"><pre>angular.<span class="pl-c1">module</span>(<span class="pl-s"><span class="pl-pds">"</span>angular-table-restful-example<span class="pl-pds">"</span></span>).<span class="pl-c1">controller</span>(<span class="pl-s"><span class="pl-pds">"</span>interactiveExampleCtrl<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">"</span>$scope<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>$filter<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">$scope</span>, <span class="pl-smi">$filter</span>) {
+
+  <span class="pl-k">var</span> vm <span class="pl-k">=</span> <span class="pl-v">this</span>;    
+
+  vm.<span class="pl-c1">originalList</span> <span class="pl-k">=</span> $scope.$parent.<span class="pl-c1">personList</span>;
+
+  vm.<span class="pl-c1">itemsPerPage</span> <span class="pl-k">=</span> <span class="pl-c1">5</span>;
+  vm.<span class="pl-c1">pagesToShow</span> <span class="pl-k">=</span> <span class="pl-c1">2</span>;
+
+  vm.<span class="pl-c1">add</span> <span class="pl-k">=</span> add;
+  vm.<span class="pl-c1">updateFilteredList</span> <span class="pl-k">=</span> updateFilteredList;
+  vm.<span class="pl-c1">loadTable</span> <span class="pl-k">=</span> loadTable;
+
+  <span class="pl-k">function</span> <span class="pl-en">add</span>() {
+    vm.<span class="pl-c1">originalList</span>.<span class="pl-c1">push</span>({name<span class="pl-k">:</span> vm.<span class="pl-c1">nameToAdd</span>});
+    vm.<span class="pl-c1">updateFilteredList</span>();
+  };
+
+  <span class="pl-k">function</span> <span class="pl-en">updateFilteredList</span>() {
+    vm.<span class="pl-c1">tableData</span> <span class="pl-k">=</span> $<span class="pl-c1">filter</span>(<span class="pl-s"><span class="pl-pds">"</span>filter<span class="pl-pds">"</span></span>)(vm.<span class="pl-c1">originalList</span>, vm.<span class="pl-c1">query</span>);
+  };
+
+  <span class="pl-k">function</span> <span class="pl-en">loadTable</span>(){
+    vm.<span class="pl-c1">tableData</span> <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+    vm.<span class="pl-c1">tableData</span> <span class="pl-k">=</span> $scope.$parent.<span class="pl-c1">personList</span>;
+  };
+
+}])</pre></div>
+</article>

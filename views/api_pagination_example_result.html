@@ -1,0 +1,9 @@
+<div class="row" ng-controller="apiCtrl as vm">
+    <table at-table="vm.list" at-paginated="5" at-load at-change="vm.changePage">
+        <tbody>
+            <tr>
+                <td at-sortable at-attribute="name" at-title="Name"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
