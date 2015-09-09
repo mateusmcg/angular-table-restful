@@ -1,6 +1,9 @@
 angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", function($http) {
   var vm = this;
 
+  vm.clear = clear;
+  vm.refresh = refresh;
+
   //Keep in mind that without the 'changeEvent' function, the API Pagination will NOT work.
   vm.myTableConfig = {
     changeEvent: tableChangeEvt,
@@ -34,6 +37,14 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
     extractedData.pageNo = data.pageNo;
 
     return extractedData;
+  }
+
+  function refresh(){
+    vm.myTableConfig.refresh();
+  }
+
+  function clear(){
+   vm.myTableConfig.clearData(); 
   }
 
 }])

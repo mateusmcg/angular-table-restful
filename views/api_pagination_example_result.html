@@ -1,11 +1,17 @@
 <div class="row" ng-controller="apiCtrl as vm">
 	<div class="col-md-12" ng-if="vm.apiError" style="border: 1px red solid; background:#FAAFBE; margin-bottom:15px; padding: 15px;">
 		<span>Something went wrong with the API call :(</span>
+	</div>	
+
+	<div class="col-md-3">
+        <button type="button" class="btn btn-primary" ng-click="vm.clear()">Clear table</button>
 	</div>
 
-	<br />
+	<div class="col-md-3">
+        <button type="button" class="btn btn-primary" ng-click="vm.refresh()">Refresh</button>
+	</div>	
 
-	<div class="col-md-12">
+	<div class="col-md-12">		
 	    <table at-table="vm.myTableConfig " at-paginated="5">
 	        <tbody>
 	            <tr>
