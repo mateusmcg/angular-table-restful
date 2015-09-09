@@ -1,7 +1,7 @@
 {
   "name": "angular-table-restful",
   "version": "1.0.0",
-  "main": "angular-table-restful.js",
+  "main": ["angular-table-restful.js", "angular-table-restful.css"],
   "homepage": "https://github.com/mateusmcg/angular-table-restful",
   "dependencies": {
     "angular": "~1.2.11",
