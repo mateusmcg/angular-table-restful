@@ -18,10 +18,11 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
     var page = 'page' + pageInfo.pageNo + '.json';
 
     $http.get('api/' + page).then(function(successData){
-        var data = prepareData(successData.data);
-        deferred.resolve(data);
+      vm.apiError = false;
+      var data = prepareData(successData.data);
+      deferred.resolve(data);
     }, function(errorData){
-        vm.apiError = true;
+      vm.apiError = true;
     });
   }
 
