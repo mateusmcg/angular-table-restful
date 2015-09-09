@@ -1,8 +1,8 @@
-angular.module("angular-table-restful-example").controller("interactiveExampleCtrl", ["$scope", "$filter", '$timeout', function($scope, $filter, $timeout) {
+angular.module("angular-table-restful-example").controller("interactiveExampleCtrl", ["personList", "$filter", '$timeout', function(personList, $filter, $timeout) {
 
   var vm = this;	
 
-  vm.originalList = $scope.$parent.personList;
+  vm.originalList = personList;
 
   vm.itemsPerPage = 5;
   vm.pagesToShow = 2;
@@ -24,7 +24,7 @@ angular.module("angular-table-restful-example").controller("interactiveExampleCt
     vm.tableData = null;
 
     $timeout(function(){
-      vm.tableData = $scope.$parent.personList;
+      vm.tableData = personList;
     }, 100);    
   };
 

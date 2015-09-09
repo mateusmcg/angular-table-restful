@@ -1,10 +1,7 @@
-angular.module("angular-table-restful-example", ["angular-table", "angular-tabs"]);
+angular.module("angular-table-restful-example", ["angular-table", "angular-tabs"])
 
 
-angular.module("angular-table-restful-example")
-.controller("example-ctrl", ["$scope", "$filter", function($scope, $filter) {
-
-    $scope.personList = [
+angular.module("angular-table-restful-example").constant('personList', [
       {
         index: 1,
         name: "Kristin Hill",
@@ -130,6 +127,4 @@ angular.module("angular-table-restful-example")
         name: "Andy Smith",
         email: "andy@smith.com"
       }
-    ]
-}
-]);
+    ]);
