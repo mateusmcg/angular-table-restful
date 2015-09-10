@@ -68,7 +68,7 @@
     })();
 
     ScopeConfigWrapper = (function () {
-        function ScopeConfigWrapper(scope, atTable, itemsPerPage, atPagesToShow, $q, $rootScope, atTableConfig) {
+        function ScopeConfigWrapper(scope, atTable, itemsPerPage, atPagesToShow, $q, $rootScope, $filter, atTableConfig) {
             if (angular.isDefined(itemsPerPage)) {
                 if (itemsPerPage.trim() == '') {
                     itemsPerPage = atTableConfig.defaultPageSize;
@@ -80,6 +80,8 @@
             var $this = this;
             this.scope = scope;
             this.$q = $q;
+            this.$filter = $filter;
+            this.checkedItemsList = [];
 
             var tableData = scope.$parent.$eval(atTable);
             scope.isMemory = false;
@@ -91,6 +93,15 @@
                 //Data in memory
                 scope.isMemory = true;
                 tableData = {};
+            } else {
+                if (tableData.checkedKey && tableData.checkedFilter) {
+                    scope.hasCheck = true;
+                    tableData = angular.extend(tableData, {
+                        getAllChecked: function () {
+
+                        }
+                    })
+                }
             }
 
             scope.atConfig = this.atConfig = angular.extend(tableData, {
@@ -260,6 +271,29 @@
             }
         };
 
+        ScopeConfigWrapper.prototype.saveCheckedItems = function () {
+            var $this = this;
+            var currentPage = this.getList();
+            var filter = this.atConfig.checkedFilter();
+            var key = this.atConfig.checkedKey();
+
+            angular.forEach(currentPage, function (pageItem, pageIndex) {
+                angular.forEach($this.checkedItemsList, function (checkedItem, checkedItemindex) {
+                    if (checkedItem[key] == pageItem[key]) {
+                        $this.checkedItemsList.splice(checkedItemindex, 1);
+                    }
+                })
+            })
+
+            var checkedItems = this.$filter('filter')(currentPage, filter);
+
+            $this.checkedItemsList = _.union($this.checkedItemsList, checkedItems);
+        };
+
+        ScopeConfigWrapper.prototype.applyCheckedItems = function () {
+           //ToDo
+        };
+
         return ScopeConfigWrapper;
 
     })();
@@ -412,7 +446,7 @@
 
             var getFillerArray, getSortedAndPaginatedList, update, w;
 
-            w = new ScopeConfigWrapper($scope, $attributes.atTable, $attributes.atPaginated, $attributes.atPagesToShow, $q, $rootScope, atTableConfig);
+            w = new ScopeConfigWrapper($scope, $attributes.atTable, $attributes.atPaginated, $attributes.atPagesToShow, $q, $rootScope, $filter, atTableConfig);
 
             getSortedAndPaginatedList = function (list, currentPage, itemsPerPage, orderBy, sortContext, predicate, $filter) {
                 var fromPage, val;
@@ -503,6 +537,10 @@
                     return;
                 }
 
+                if ($scope.hasCheck) {
+                    w.saveCheckedItems();
+                }
+
                 var _sortList = [];
                 _sortList = _sortList.concat(w.getSortList());
 
@@ -555,6 +593,9 @@
                 page = parseInt(page);
                 page = keepInBounds(w.getCurrentPage() + page, 0, w.getNumberOfPages() - 1);
                 if ($scope.atConfig.changeEvent) {
+                    if ($scope.hasCheck) {
+                        w.saveCheckedItems();
+                    }
                     w.callChangeEvent(page, w.getItemsPerPage(), w.getPredicates(), function (list) {
                         $scope.pageSequence.realignGreedy(page);
                         w.setCurrentPage(page);
