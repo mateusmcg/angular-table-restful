@@ -147,6 +147,9 @@
                 },
                 clearData: function () {
                     scope.$eval($this.atConfig.listName + '=list', { list: null });
+                },
+                getList: function () {
+                    return $this.getList() ? $this.getList().slice(0) : undefined;
                 }
             });
 
