@@ -39,7 +39,7 @@
         i18nDirective: '',
         defaultPageSize: 10
     });
-
+    
     ColumnConfiguration = (function() {
         function ColumnConfiguration(bodyMarkup, headerMarkup, atTableConfig) {
             this.attribute = bodyMarkup.attribute;
@@ -994,7 +994,7 @@
         return PageSequence;
 
     })();
-
+    
     angular.module("angular-table").directive("atTable", ["$filter", '$q', '$rootScope', '$compile', 'atTableConfig', function($filter, $q, $rootScope, $compile, atTableConfig) {
         return {
             restrict: "AC",
