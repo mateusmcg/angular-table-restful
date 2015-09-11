@@ -16,7 +16,7 @@ module.exports = (grunt) ->
         clean:
             working:
                 src: [
-                    'angular-table-restful.*'
+                    'angular-table-restful.js'
                 ]
 
         uglify:

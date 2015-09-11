@@ -23,7 +23,7 @@
                         table.post($scope, $element, $attributes, $filter, $q, $rootScope, atTableConfig);
 
                         $scope.markSelected = function (item) {
-                            if (this.atConfig.selectedItem != item) {
+                            if (this.atConfig.selectedItem !== item) {
                                 this.atConfig.selectedItem = item;
                                 return;
                             }
@@ -31,14 +31,14 @@
                             this.atConfig.selectedItem = undefined;
                         };
 
-                        if ($attributes.atScroll != "false") {
+                        if ($attributes.atScroll !== "false") {
                             var scroll = angular.element('<div class="table-scroll"></div>');
                             $element.before(scroll);
                             scroll.append($element);
                             var pagination = $element.find('.scrolled-pagination');
                             pagination.insertAfter(scroll).addClass('text-center');
 
-                            function destroy() {
+                            var destroy = function destroy() {
                                 var s = scroll;
                                 var p = pagination;
                                 scroll = null;
@@ -79,7 +79,7 @@
                 if (!attribute) {
                     throw "at-attribute specified without value: " + (element.html());
                 }
-                if (element.children().length == 0) {
+                if (element.children().length === 0) {
                     if (attributes.atFilter) {
                         return element.append("{{item." + attribute + " | " + attributes.atFilter + "}}");
                     } else {
