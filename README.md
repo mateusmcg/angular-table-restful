@@ -235,6 +235,8 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
           };
           ```
 
+          * getCheckedItems -> Returns all the items that are checked.
+
           * checkAllItems(bool) -> For the checkbox header that will check the entire page use this function (param 'bool' should be true to check and false for uncheck all). But for it to work, you'll need to set one property into your config. It receives each table item at a time and if should check it or not(It is called from checkAllItems).
           
           Usage Example:
