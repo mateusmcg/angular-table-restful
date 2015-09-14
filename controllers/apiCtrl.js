@@ -14,7 +14,7 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
 
     //The 'Primary Key' for your table. Put in here the property that will identify each item.
     checkedKey: function() {
-        return "id";
+        return "name";
     },
     //How the table will know that an item is checked? Put here a filter that will tell it that.
     //It can be a string/object/function. See the doc above for 'Angular filter'.
@@ -62,9 +62,13 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
       vm.myTableConfig.checkAllItems(vm.allChecked);
   }
 
-  function getCheckedItems() {
-    vm.selectedItemList = null;
-    vm.selectedItemList = vm.myTableConfig.getCheckedItems();
+  function getCheckedItems(item) {    
+    if(item.selected)
+      vm.selectedItemList.push(item);
+    else {      
+      var index = vm.selectedItemList.indexOf(item);
+      vm.selectedItemList.splice(index, 1);
+    }
   }
 
 }])
