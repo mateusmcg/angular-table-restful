@@ -1,16 +1,35 @@
 /*
- angular-table-restful v1.0.0
+ angular-table-restful v0.0.1
  https://github.com/mateusmcg/angular-table-restful
 */
-// author:  Mateus Cerqueira
-//			Fábio Viana
-// version: 1.0.0
+// author:  "Fábio Henrique da Silva Viana <fabioviana.bh@gmail.com>",
+//          "Mateus Cerqueira <mateus_mcg@icloud.com>",
+//          "Henrique Silva Brighenti <henriqueb@ciandt.com>",
+//          "Bruno Camodeco dos Santos <brunocs@ciandt.com>",
+//          "Tanato Cartaxo <tanatopc@gmail.com>"
+// version: 0.0.1
 // license:  MIT 
 // homepage: http://github.com/mateusmcg/angular-table-restful
 (function () {
+    'use strict';
+
     var ColumnConfiguration, PageSequence, PaginatedSetup, ScopeConfigWrapper, Setup, StandardSetup, Table, TableConfiguration, emptyTableTemplate, paginationTemplate, paginationTemplateScroll,
-      __hasProp = {}.hasOwnProperty,
-      __extends = function (child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+        __hasProp = {}.hasOwnProperty,
+        __extends = function (child, parent) {
+            for (var key in parent) {
+                if (__hasProp.call(parent, key)) {
+                    child[key] = parent[key];
+                }
+            }
+
+            function ctor() {
+                this.constructor = child;
+            }
+            ctor.prototype = parent.prototype;
+            child.prototype = new ctor();
+            child.__super__ = parent.prototype;
+            return child;
+        };
 
     emptyTableTemplate = '<tr ng-show="isEmpty()"><td colspan="100%"><strong class="text-warning"><i18n>Nenhum item encontrado.</i18n></strong></td></tr>';
     paginationTemplateScroll = "<div ng-show='isInitialized() && !isEmpty() && getNumberOfPages() > 1' style='margin: 0px;margin-top:10px;'><ul class='pagination'><li ng-class='{disabled: getCurrentPage() <= 0}'><a href='' ng-click='firstPage()'>&lsaquo;</a></li><li ng-if='pageSequence.data[0] > 0'><a href='' ng-click='stepPage(-atConfig.numberOfPages)'>1</a></li><li ng-if='pageSequence.data[0] > 0'><a href='' ng-click='stepPage(-(pageSequence.data.indexOf(getCurrentPage()) + atConfig.numberOfPagesToShow))'>&hellip;</a></li><li ng-class='{active: getCurrentPage() == page}' ng-repeat='page in pageSequence.data'><a href='' ng-click='goToPage(page)'>{{page + 1}}</a></li><li ng-if='pageSequence.data[pageSequence.data.length -1] < getNumberOfPages() - 1'><a href='' ng-click='stepPage(atConfig.numberOfPagesToShow - pageSequence.data.indexOf(getCurrentPage()))'>&hellip;</a></li><li ng-if='pageSequence.data[pageSequence.data.length -1] < getNumberOfPages() - 1'><a href='' ng-click='stepPage(getNumberOfPages())'>{{getNumberOfPages()}}</a></li><li ng-class='{disabled: getCurrentPage() >= getNumberOfPages() - 1}'><a href='' ng-click='stepPage(1)'>&rsaquo;</a></li></ul></div>";
@@ -39,8 +58,9 @@
             var th;
             th = angular.element(document.createElement("th"));
 
-            if (this.atTableConfig.i18nDirective)
+            if (this.atTableConfig.i18nDirective) {
                 return th.attr(this.atTableConfig.i18nDirective, '');
+            }
 
             return th;
         };
@@ -91,9 +111,9 @@
     })();
 
     ScopeConfigWrapper = (function () {
-        function ScopeConfigWrapper(scope, atTable, itemsPerPage, atPagesToShow, $q, $rootScope, atTableConfig) {
+        function ScopeConfigWrapper(scope, atTable, itemsPerPage, atPagesToShow, $q, $rootScope, $filter, atTableConfig) {
             if (angular.isDefined(itemsPerPage)) {
-                if (itemsPerPage.trim() == '') {
+                if (itemsPerPage.trim() === '') {
                     itemsPerPage = atTableConfig.defaultPageSize;
                 } else {
                     itemsPerPage = parseInt(itemsPerPage);
@@ -103,6 +123,8 @@
             var $this = this;
             this.scope = scope;
             this.$q = $q;
+            this.$filter = $filter;
+            this.checkedItemsList = [];
 
             var tableData = scope.$parent.$eval(atTable);
             scope.isMemory = false;
@@ -114,6 +136,19 @@
                 //Data in memory
                 scope.isMemory = true;
                 tableData = {};
+            } else {
+                if (tableData.checkedKey && tableData.checkedFilter) {
+                    scope.hasCheck = true;
+                    tableData = angular.extend(tableData, {
+                        getCheckedItems: function () {
+                            $this.saveCheckedItems();
+                            return $this.checkedItemsList;
+                        },
+                        clearAllCheckedItems: function () {
+                            $this.checkedItemsList = [];
+                        }
+                    });
+                }
             }
 
             scope.atConfig = this.atConfig = angular.extend(tableData, {
@@ -128,8 +163,9 @@
                 numberOfPagesToShow: atPagesToShow ? atPagesToShow : 5,
                 getLastPage: function () {
                     //If all pages are full it means that the next item will go on a new page.
-                    if (scope.sortedAndPaginatedList.totalCount % itemsPerPage == 0)
+                    if (scope.sortedAndPaginatedList.totalCount % itemsPerPage === 0) {
                         return this.numberOfPages + 1;
+                    }
 
                     return this.numberOfPages;
                 },
@@ -140,6 +176,7 @@
                 // If not in memory
                 // Sort = none and currentPage = first.
                 refresh: function () {
+                    $this.checkedItemsList = [];
                     $this.callChangeEvent(0, $this.atConfig.itemsPerPage, undefined, function (list) {
                         $this.setCurrentPage(0);
                         $this.atConfig.setSortAndPredicates();
@@ -169,13 +206,36 @@
                     return $this.getList() ? $this.getList().length > 0 : false;
                 },
                 clearData: function () {
-                    scope.$eval($this.atConfig.listName + '=list', { list: null });
+                    scope.$eval($this.atConfig.listName + '=list', {
+                        list: null
+                    });
+                },
+                getList: function () {
+                    return $this.getList() ? $this.getList().slice(0) : undefined;
+                },
+                checkAllItems: function (param) {
+                    var currentPage = $this.getList();
+                    angular.forEach(currentPage, function (obj) {
+                        $this.atConfig.checkItem(obj, param);
+                    });
+                },
+                prepareData: tableData.prepareData ? tableData.prepareData : function (data) {
+                    var extractedData = data;
+                    if (!_.isArray(data) && data.pageItems && data.pageNo && data.totalCount >= 0) {
+                        extractedData = [];
+                        extractedData = data.pageItems;
+                        extractedData.totalCount = data.totalCount;
+                        extractedData.pageNo = data.pageNo;
+                    }
+                    return extractedData;
                 }
             });
 
             //If API paginated, atConfig data is passed to controller's atTable variable.
             if (!scope.isMemory) {
-                scope.$parent.$eval(atTable + '=value', { value: this.atConfig });
+                scope.$parent.$eval(atTable + '=value', {
+                    value: this.atConfig
+                });
             }
         }
 
@@ -197,7 +257,9 @@
         };
 
         ScopeConfigWrapper.prototype.setList = function (_list) {
-            this.scope.$eval(this.atConfig.listName + '=list', { list: _list });
+            this.scope.$eval(this.atConfig.listName + '=list', {
+                list: _list
+            });
         };
 
         ScopeConfigWrapper.prototype.getSortList = function () {
@@ -205,11 +267,11 @@
         };
 
         ScopeConfigWrapper.prototype.setSortList = function (sortList) {
-            return this.atConfig.sortList = sortList;
+            return this.atConfig.sortList = sortList; // jshint ignore:line
         };
 
         ScopeConfigWrapper.prototype.setPredicates = function (predicates) {
-            return this.atConfig.predicates = predicates;
+            return this.atConfig.predicates = predicates; // jshint ignore:line
         };
 
         ScopeConfigWrapper.prototype.getPredicates = function () {
@@ -217,19 +279,28 @@
         };
 
         ScopeConfigWrapper.prototype.callChangeEvent = function (page, itemsPerPage, sortList, success) {
+            var $this = this;
             var deferred = this.$q.defer();
             deferred.promise.then(function (list) {
                 // atribui página atual para atribuir ao scope
                 // sempre que lista for atualizada por evento de paginação ou ordenação o update será chamado,
                 // caso o objeto tenha o atributo pageNo esta página será atribuída ao currentPage, caso contrário será considerado como página 0,
                 // para filtros pela tela resete a páginação/ordenação, pois não é executado por um promise, a atribuição é direto no list, não pasando por aqui.
-                if (list && !list.pageNo)
-                    list.pageNo = page + 1;
 
-                success(list);
+                var extractedData = $this.atConfig.prepareData(list);
+
+                if (extractedData && !extractedData.pageNo) {
+                    extractedData.pageNo = page + 1;
+                }
+
+                success(extractedData);
             });
 
-            this.atConfig.changeEvent({ pageNo: page + 1, pageSize: itemsPerPage, sort: sortList }, deferred);
+            this.atConfig.changeEvent({
+                pageNo: page + 1,
+                pageSize: itemsPerPage,
+                sort: sortList
+            }, deferred);
         };
 
         ScopeConfigWrapper.prototype.getItemsPerPage = function () {
@@ -245,7 +316,7 @@
         };
 
         ScopeConfigWrapper.prototype.setCurrentPage = function (currentPage) {
-            return this.atConfig.currentPage = currentPage;
+            return this.atConfig.currentPage = currentPage; // jshint ignore:line
         };
 
         ScopeConfigWrapper.prototype.getOrderBy = function () {
@@ -261,7 +332,7 @@
         };
 
         ScopeConfigWrapper.prototype.setNumberOfPages = function (numberOfPages) {
-            return this.atConfig.numberOfPages = numberOfPages;
+            return this.atConfig.numberOfPages = numberOfPages; // jshint ignore:line 
         };
 
         ScopeConfigWrapper.prototype.getNumberOfPagesToShow = function () {
@@ -273,11 +344,57 @@
             if (selectedItem) {
                 angular.forEach(this.getList(), function (item, index) {
                     //ToDo: Alterar condição para comparar todos os atributos do selectedItem.
-                    if (item.id && selectedItem.id && item.id == selectedItem.id)
+                    if (item.id && selectedItem.id && item.id == selectedItem.id) {
                         selectedItem = item;
-                })
+                    }
+                });
                 this.atConfig.selectedItem = selectedItem;
             }
+        };
+
+        ScopeConfigWrapper.prototype.saveCheckedItems = function () {
+            var $this = this;
+            var currentPage = this.getList();
+            var filter = this.atConfig.checkedFilter();
+            var key = this.atConfig.checkedKey();
+
+            angular.forEach(currentPage, function (pageItem, pageIndex) {
+                var checkedItemIndex = _.findIndex($this.checkedItemsList, function isInCheckedList(checkedItem) {
+                    return checkedItem[key] === pageItem[key];
+                });
+                if (checkedItemIndex !== -1) {
+                    $this.checkedItemsList.splice(checkedItemIndex, 1);
+                }
+            });
+
+            var checkedItems = this.$filter('filter')(currentPage, filter);
+
+            $this.checkedItemsList = _.union($this.checkedItemsList, checkedItems);
+        };
+
+        ScopeConfigWrapper.prototype.applyCheckedItems = function () {
+            var $this = this;
+            var currentPage = this.getList();
+            var filter = this.atConfig.checkedFilter();
+            var key = this.atConfig.checkedKey();
+
+            angular.forEach(currentPage, function (pageItem, pageIndex) {
+                var checkedItem = _.find($this.checkedItemsList, function isInCheckedList(checkedItem) {
+                    return checkedItem[key] === pageItem[key];
+                });
+                if (checkedItem !== undefined) {
+                    delete checkedItem['$$hashKey'];
+                    var checkedProperties = Object.getOwnPropertyNames(checkedItem);
+                    var pageItemProperties = Object.getOwnPropertyNames(pageItem);
+
+                    //Returns all the properties that the checkedItem has and the pageItem hasn't.
+                    var differences = _.difference(checkedProperties, pageItemProperties);
+
+                    angular.forEach(differences, function (diff, index) {
+                        pageItem[diff] = checkedItem[diff];
+                    });
+                }
+            });
         };
 
         return ScopeConfigWrapper;
@@ -364,8 +481,9 @@
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
                 td = _ref[_i];
                 td = angular.element(td);
-                if (table.attr('at-ellipsis') != "false")
+                if (table.attr('at-ellipsis') !== "false") {
                     td.addClass('text-ellipsis');
+                }
                 attribute = td.attr("at-attribute");
                 title = td.attr("at-title") || this.capitaliseFirstLetter(td.attr("at-attribute"));
                 sortable = td.attr("at-sortable") !== void 0 || this.isSortable(td.attr("class"));
@@ -413,12 +531,11 @@
     PaginatedSetup = (function (_super) {
         __extends(PaginatedSetup, _super);
 
-        function PaginatedSetup() {
-        }
+        function PaginatedSetup() { }
 
         PaginatedSetup.prototype.compile = function (element) {
             var trackBy = element.attr('track-by') | '';
-            if (trackBy && trackBy.trim() != '') {
+            if (trackBy && trackBy.trim() !== '') {
                 if (trackBy.trim().indexOf('$') < 0 && trackBy.trim().indexOf('item.') < 0) {
                     trackBy = 'item.' + trackBy;
                 }
@@ -430,9 +547,9 @@
 
         PaginatedSetup.prototype.link = function ($scope, $element, $attributes, $filter, $q, $rootScope, atTableConfig) {
 
-            var getFillerArray, getSortedAndPaginatedList, update, w;
+            var getFillerArray, getSortedAndPaginatedList, update, w, keepInBounds;
 
-            w = new ScopeConfigWrapper($scope, $attributes.atTable, $attributes.atPaginated, $attributes.atPagesToShow, $q, $rootScope, atTableConfig);
+            w = new ScopeConfigWrapper($scope, $attributes.atTable, $attributes.atPaginated, $attributes.atPagesToShow, $q, $rootScope, $filter, atTableConfig);
 
             getSortedAndPaginatedList = function (list, currentPage, itemsPerPage, orderBy, sortContext, predicate, $filter) {
                 var fromPage, val;
@@ -443,8 +560,9 @@
                         fromPage = itemsPerPage * currentPage - list.length;
                     }
                     if (sortContext === "global") {
-                        if (predicate.length > 0)
+                        if (predicate.length > 0) {
                             val = $filter(orderBy)(val, predicate);
+                        }
                         if (itemsPerPage) {
                             val = $filter("limitTo")(val, fromPage);
                             val = $filter("limitTo")(val, itemsPerPage);
@@ -454,8 +572,9 @@
                             val = $filter("limitTo")(val, fromPage);
                             val = $filter("limitTo")(val, itemsPerPage);
                         }
-                        if (predicate.length > 0)
+                        if (predicate.length > 0) {
                             val = $filter(orderBy)(val, predicate);
+                        }
                     }
                     return val;
                 } else {
@@ -501,7 +620,6 @@
                         return $scope.pageSequence.realignGreedy(0);
                     }
                 }
-                // fim paginação
             };
 
             $scope.isInitialized = function () {
@@ -526,10 +644,15 @@
                 var _sortList = [];
                 _sortList = _sortList.concat(w.getSortList());
 
-                var result = _.find(_sortList, function (e) { return e.predicate == predicate });
+                var result = _.find(_sortList, function (e) {
+                    return e.predicate === predicate;
+                });
 
                 if (!result) {
-                    _sortList.push({ predicate: predicate, descending: true })
+                    _sortList.push({
+                        predicate: predicate,
+                        descending: true
+                    });
                 } else {
                     if (!result.descending) {
                         var indexObj = _sortList.indexOf(result);
@@ -549,8 +672,12 @@
                 });
 
                 if ($scope.atConfig.changeEvent) {
-                    if (w.getCurrentPage() != 0) {
+                    if (w.getCurrentPage() !== 0) {
                         w.setCurrentPage(0);
+                    }
+
+                    if ($scope.hasCheck) {
+                        w.saveCheckedItems();
                     }
 
                     w.callChangeEvent(w.getCurrentPage(), w.getItemsPerPage(), _predicates, function (list) {
@@ -558,12 +685,16 @@
                         w.setPredicates(_predicates);
                         w.setList(list);
                         w.keepItemSelected();
+
+                        if ($scope.hasCheck) {
+                            w.applyCheckedItems();
+                        }
                     });
                 } else {
                     w.setSortList(_sortList);
                     w.setPredicates(_predicates);
 
-                    if (w.getCurrentPage() != 0) {
+                    if (w.getCurrentPage() !== 0) {
                         w.setCurrentPage(0);
                     } else {
                         update();
@@ -575,11 +706,18 @@
                 page = parseInt(page);
                 page = keepInBounds(w.getCurrentPage() + page, 0, w.getNumberOfPages() - 1);
                 if ($scope.atConfig.changeEvent) {
+                    if ($scope.hasCheck) {
+                        w.saveCheckedItems();
+                    }
                     w.callChangeEvent(page, w.getItemsPerPage(), w.getPredicates(), function (list) {
                         $scope.pageSequence.realignGreedy(page);
                         w.setCurrentPage(page);
                         w.setList(list);
                         w.keepItemSelected();
+
+                        if ($scope.hasCheck) {
+                            w.applyCheckedItems();
+                        }
                     });
                 } else {
                     $scope.pageSequence.realignGreedy(page);
@@ -593,10 +731,17 @@
 
             $scope.goToPage = function (page) {
                 if ($scope.atConfig.changeEvent) {
+                    if ($scope.hasCheck) {
+                        w.saveCheckedItems();
+                    }
                     w.callChangeEvent(page, w.getItemsPerPage(), w.getPredicates(), function (list) {
                         w.setCurrentPage(page);
                         w.setList(list);
                         w.keepItemSelected();
+
+                        if ($scope.hasCheck) {
+                            w.applyCheckedItems();
+                        }
                     });
                 } else {
                     return w.setCurrentPage(page);
@@ -608,14 +753,14 @@
 
             if (!$scope.atConfig.changeEvent) {
                 $scope.$watch('atConfig.currentPage', function (newValue, oldValue) {
-                    if (newValue != oldValue) {
+                    if (newValue !== oldValue) {
                         return update();
                     }
                 });
             }
 
             $scope.$watch('atConfig.itemsPerPage', function (newValue, oldValue) {
-                if (newValue != oldValue) {
+                if (newValue !== oldValue) {
                     if ($scope.atConfig.changeEvent) {
                         w.callChangeEvent(w.getCurrentPage(), newValue, w.getPredicates(), function (list) {
                             w.setItemsPerPage(newValue);
@@ -630,7 +775,7 @@
 
             if (!$scope.atConfig.changeEvent) {
                 $scope.$watch('atConfig.sortContext', function (newValue, oldValue) {
-                    if (newValue != oldValue) {
+                    if (newValue !== oldValue) {
                         return update();
                     }
                 });
@@ -639,7 +784,7 @@
             // If data is in memory, listen to the changes and update the table.
             if ($scope.isMemory) {
                 $scope.$watchCollection($attributes.atTable, function (newValue, oldValue) {
-                    if (newValue != oldValue) {
+                    if (newValue !== oldValue) {
                         update();
                     }
                 });
@@ -647,8 +792,9 @@
 
             if (!$scope.isMemory) {
                 $scope.$watchCollection('listData', function (newValue, oldValue) {
-                    if (newValue != oldValue)
+                    if (newValue !== oldValue) {
                         update();
+                    }
                 });
 
                 // If attr 'at-load-on-startup' or atConfig.loadOnStartup are defined
@@ -680,7 +826,7 @@
         Table.prototype.constructHeader = function () {
             var i, tr, _i, _len, _ref;
             tr = this.element.find("thead > tr");
-            if (tr.length == 0) {
+            if (tr.length === 0) {
                 tr = angular.element(document.createElement("tr"));
             }
             _ref = this.tableConfiguration.columnConfigurations;
@@ -694,8 +840,8 @@
         Table.prototype.setupHeader = function () {
             var header, thead;
             thead = this.element.find("thead");
-            if (thead.length == 0) {
-                thead = $('<thead></thead>')
+            if (thead.length === 0) {
+                thead = $('<thead></thead>');
                 this.element.prepend(thead);
             }
 
@@ -712,8 +858,8 @@
 
         Table.prototype.setupFooter = function () {
             var tfoot = this.element.find('tfoot');
-            if (tfoot.length == 0) {
-                tfoot = $('<tfoot></tfoot>')
+            if (tfoot.length === 0) {
+                tfoot = $('<tfoot></tfoot>');
                 this.element.append(tfoot);
             }
 
@@ -730,7 +876,7 @@
 
             if (this.tableConfiguration.paginated) {
                 //Se o attr atScroll for false, não deve ser adicionado o scroll, logo a paginação fica normal.
-                if (this.element.attr("at-scroll") == "false") {
+                if (this.element.attr("at-scroll") === "false") {
                     tfoot.append(paginationTemplate);
                 } else {
                     var pagination = angular.element(paginationTemplateScroll);
@@ -775,7 +921,9 @@
                 $scope.getSortIcon = function (predicate) {
                     var result;
                     if ($scope.atConfig.sortList && $scope.atConfig.sortList.length > 0) {
-                        result = _.find($scope.atConfig.sortList, function (e) { return e.predicate == predicate });
+                        result = _.find($scope.atConfig.sortList, function (e) {
+                            return e.predicate === predicate;
+                        });
                     }
 
                     if (!result) {
@@ -836,22 +984,22 @@
             if (this.length > (this.upperBound - this.lowerBound)) {
                 throw "sequence is too long";
             }
-            return this.data = this.generate(this.data[0]);
+            return this.data = this.generate(this.data[0]); // jshint ignore:line
         };
 
         PageSequence.prototype.relocate = function (distance) {
             var newStart;
             newStart = this.data[0] + distance;
-            return this.data = this.generate(newStart, newStart + this.length);
+            return this.data = this.generate(newStart, newStart + this.length); // jshint ignore:line
         };
 
         PageSequence.prototype.realignGreedy = function (page) {
             var newStart;
 
             //Se a página que está sendo navegada não existe na lista de páginas exibidas, atualizo as páginas a serem exibidas.
-            if (this.data.indexOf(page) == -1) {
+            if (this.data.indexOf(page) === -1) {
                 newStart = page;
-                return this.data = this.generate(newStart);
+                return this.data = this.generate(newStart); // jshint ignore:line
             }
         };
 
@@ -860,6 +1008,7 @@
         return PageSequence;
 
     })();
+    
     angular.module("angular-table").directive("atTable", ["$filter", '$q', '$rootScope', '$compile', 'atTableConfig', function ($filter, $q, $rootScope, $compile, atTableConfig) {
         return {
             restrict: "AC",
@@ -885,7 +1034,7 @@
                         table.post($scope, $element, $attributes, $filter, $q, $rootScope, atTableConfig);
 
                         $scope.markSelected = function (item) {
-                            if (this.atConfig.selectedItem != item) {
+                            if (this.atConfig.selectedItem !== item) {
                                 this.atConfig.selectedItem = item;
                                 return;
                             }
@@ -893,14 +1042,14 @@
                             this.atConfig.selectedItem = undefined;
                         };
 
-                        if ($attributes.atScroll != "false") {
+                        if ($attributes.atScroll !== "false") {
                             var scroll = angular.element('<div class="table-scroll"></div>');
                             $element.before(scroll);
                             scroll.append($element);
                             var pagination = $element.find('.scrolled-pagination');
                             pagination.insertAfter(scroll).addClass('text-center');
 
-                            function destroy() {
+                            var destroy = function destroy() {
                                 var s = scroll;
                                 var p = pagination;
                                 scroll = null;
@@ -941,7 +1090,7 @@
                 if (!attribute) {
                     throw "at-attribute specified without value: " + (element.html());
                 }
-                if (element.children().length == 0) {
+                if (element.children().length === 0) {
                     if (attributes.atFilter) {
                         return element.append("{{item." + attribute + " | " + attributes.atFilter + "}}");
                     } else {

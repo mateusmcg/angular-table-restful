@@ -19,26 +19,10 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
 
     $http.get('api/' + page).then(function(successData){
       vm.apiError = false;
-      var data = prepareData(successData.data);
-      deferred.resolve(data);
+      deferred.resolve(successData.data);
     }, function(errorData){
       vm.apiError = true;
     });
-  }
-
-  //This function could be an interceptor, just treat the API response
-  function prepareData(data){
-    var extractedData = [];
-
-    extractedData = data.pageItems;
-
-    //totalCount -> Total count of all items (e.g.: 3 pages with 5 items each, totalCount: 15).
-    extractedData.totalCount = data.totalCount;
-
-    //pageNo -> The page that the API will retreive (same value that the pageInfo.pageNo has).
-    extractedData.pageNo = data.pageNo;
-
-    return extractedData;
   }
 
   //These are some examples of functionalities that you can use.
