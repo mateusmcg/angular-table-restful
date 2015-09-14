@@ -4,11 +4,28 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
   vm.clear = clear;
   vm.refresh = refresh;
   vm.hasData = hasData;
+  vm.checkboxChange = checkboxChange;
+  vm.getCheckedItems = getCheckedItems;
 
   //Keep in mind that without the 'changeEvent' function, the API Pagination will NOT work.
   vm.myTableConfig = {
     changeEvent: tableChangeEvt,
-    loadOnStartup: true //Responsible to load the table when page loads.
+    loadOnStartup: true, //Responsible to load the table when page loads.
+
+    //The 'Primary Key' for your table. Put in here the property that will identify each item.
+    checkedKey: function() {
+        return "id";
+    },
+    //How the table will know that an item is checked? Put here a filter that will tell it that.
+    //It can be a string/object/function. See the doc above for 'Angular filter'.
+    checkedFilter: function() {
+        return {
+            selected: true
+        };
+    },
+    checkItem: function(obj, bool) {
+        obj.selected = bool;
+    }
   };
 
   function tableChangeEvt(pageInfo, deferred) {
@@ -27,16 +44,27 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
 
   //These are some examples of functionalities that you can use.
   //For a full view check out the 'vm.myTableConfig' object at the console log or the docs.
-  function refresh(){
+  function refresh() {
     vm.myTableConfig.refresh();
   }
 
-  function clear(){
+  function clear() {
     vm.myTableConfig.clearData(); 
   }
 
-  function hasData(){
+  function hasData() {
     return vm.myTableConfig.hasData(); 
+  }
+
+  //When the 'checkAll' checkbox gets triggered.
+  function checkboxChange() {
+      //This function will trigger the 'checkItem' function for each item in the currentPage checking or unchecking them all.
+      vm.myTableConfig.checkAllItems(vm.allChecked);
+  }
+
+  function getCheckedItems() {
+    vm.selectedItemList = null;
+    vm.selectedItemList = vm.myTableConfig.getCheckedItems();
   }
 
 }])
