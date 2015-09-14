@@ -18,7 +18,7 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
 
 * Or manually add the following files to your page:
 
-    ```shell
+    ```css
     <link rel="stylesheet" href="../angular-table-restful.css">
     <script src='../angular-table-restful.js'></script>
     ```
@@ -258,7 +258,7 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
           </tbody>
           ```
 
-        Controller
+          Controller
 
           ```javascript
           vm.myTableConfig = {
