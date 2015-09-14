@@ -36,7 +36,7 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
 
 * With API Pagination support you don't need to load hundreds or thousands of lines of data at once, you simply load only the page that you want making the request to the back-end service light, fast and simple.
 
-* See more details [here](#attable).
+* See more details [here](#api-pagination-example).
 
 ======
 
