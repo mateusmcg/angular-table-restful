@@ -20,8 +20,8 @@
 <h2>List data</h2>
 • You can use 'vm.myTableConfig.getCheckedItems()' function to retrieve all checked items.
 
-<article class="markdown-body"><div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-12<span class="pl-pds">"</span></span> <span class="pl-e">ng-repeat</span>=<span class="pl-s"><span class="pl-pds">"</span>checkedItem in vm.myTableConfig.getCheckedItems()<span class="pl-pds">"</span></span> <span class="pl-e">ng-non-bindable</span>&gt;
-    {{checkedItem | json}}
+<article class="markdown-body"><div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-12<span class="pl-pds">"</span></span> <span class="pl-e">ng-repeat</span>=<span class="pl-s"><span class="pl-pds">"</span>checkedItem in vm.myTableConfig.getCheckedItems()<span class="pl-pds">"</span></span>&gt;
+    { { checkedItem | json } }
 &lt;/<span class="pl-ent">div</span>&gt;</pre></div>
 </article>
 
