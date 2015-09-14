@@ -379,9 +379,9 @@
             }
         };
 
-        TableConfiguration.prototype.extractWidth = function (classes) {
+        TableConfiguration.prototype.extractWidth = function (prop) {
             var width;
-            width = /([0-9]+px)/i.exec(classes);
+            width = /([0-9]+px)/i.exec(prop);
             if (width) {
                 return width[0];
             } else {
@@ -445,7 +445,7 @@
                 attribute = td.attr("at-attribute");
                 title = td.attr("at-title") || this.capitaliseFirstLetter(td.attr("at-attribute"));
                 sortable = td.attr("at-sortable") !== void 0 || this.isSortable(td.attr("class"));
-                width = this.extractWidth(td.attr("class"));
+                width = this.extractWidth(td.attr("width") ? td.attr("width") : td.attr("class"));
                 initialSorting = this.getInitialSorting(td);
                 bodyDefinition.push({
                     attribute: attribute,
