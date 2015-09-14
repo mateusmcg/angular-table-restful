@@ -6,7 +6,6 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
   vm.hasData = hasData;
   vm.checkboxChange = checkboxChange;
   vm.getCheckedItems = getCheckedItems;
-  vm.selectedItemList = [];
 
   //Keep in mind that without the 'changeEvent' function, the API Pagination will NOT work.
   vm.myTableConfig = {
@@ -26,7 +25,6 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
     },
     checkItem: function(obj, bool) {
         obj.selected = bool;
-        vm.getCheckedItems(obj);
     }
   };
 
@@ -62,17 +60,11 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
   function checkboxChange() {
       //This function will trigger the 'checkItem' function for each item in the currentPage checking or unchecking them all.
       vm.myTableConfig.checkAllItems(vm.allChecked);
+      vm.selectedItemList = vm.resultTableConfig.getCheckedItems();
   }
 
   function getCheckedItems(item) {    
-    if(item.selected)
-      vm.selectedItemList.push(item);
-    else {      
-      var index = vm.selectedItemList.indexOf(item);
-      if(index > -1){
-        vm.selectedItemList.splice(index, 1);
-      }      
-    }
+    vm.selectedItemList = vm.resultTableConfig.getCheckedItems();
   }
 
 }])
