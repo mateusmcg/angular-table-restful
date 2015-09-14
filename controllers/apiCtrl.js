@@ -60,11 +60,6 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
   function checkboxChange() {
       //This function will trigger the 'checkItem' function for each item in the currentPage checking or unchecking them all.
       vm.myTableConfig.checkAllItems(vm.allChecked);
-      vm.selectedItemList = vm.myTableConfig.getCheckedItems();
-  }
-
-  function getCheckedItems(item) {    
-    vm.selectedItemList = vm.myTableConfig.getCheckedItems();
   }
 
 }])

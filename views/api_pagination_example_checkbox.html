@@ -13,7 +13,7 @@
 			</thead>	    
 	        <tbody>
 	            <tr>
-	            	<td at-attribute="Select" class="text-center"><input type="checkbox" ng-model="item.selected" ng-change="vm.getCheckedItems(item)" /></td>
+	            	<td at-attribute="Select" class="text-center"><input type="checkbox" ng-model="item.selected" /></td>
 	                <td at-sortable at-attribute="name" at-title="Name"></td>
 	            </tr>
 	        </tbody>
@@ -24,8 +24,8 @@
 		<div class="col-md-12 ">
 			<button type="button" class="btn btn-primary col-md-12" disabled="disabled">Selected items</button>
 		</div>
-		<div class="col-md-12" ng-repeat="selectedItem in vm.selectedItemList">
-			{{selectedItem | json}}
+		<div class="col-md-12" ng-repeat="checkedItem in vm.myTableConfig.getCheckedItems()">
+			{{checkedItem | json}}
 		</div>
 	</div>
 </div>
