@@ -51,8 +51,8 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
   1. [atEllipsis](#atellipsis)
   1. [atLoadOnStartup](#atloadonstartup)
   1. [atPagesToShow](#atpagestoshow)  
-  1. [InMemory Example](#inmemoryexample)
-  1. [API Example](#apiexample)
+  1. [InMemory Example](#inmemory-example)
+  1. [API Example](#api-example)
 
 #### atTable
 
@@ -201,7 +201,7 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
 
       }]);
   ```
-  
+
       + ```vm.myTableConfig``` must have a changeEvent function that will be triggered for the API Pagination to work.
     
       + Also you can access a lot of the table's functionalities from your controller through the ```vm.myTableConfig``` because the angular-table-restful injects methods and attributes to it, making data manipulation easy. e.g.:
