@@ -69,7 +69,9 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
       vm.selectedItemList.push(item);
     else {      
       var index = vm.selectedItemList.indexOf(item);
-      vm.selectedItemList.splice(index, 1);
+      if(index > -1){
+        vm.selectedItemList.splice(index, 1);
+      }      
     }
   }
 
