@@ -1,8 +1,8 @@
 {
     "name": "angular-table-restful",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "homepage": "https://github.com/mateusmcg/angular-table-restful",
-    "description": "Angular Table com suporte à paginação via API",
+    "description": "Angular Table with support for API Pagination",
     "author": {
         "name": "mateusmcg",
         "url": "https://github.com/mateusmcg"

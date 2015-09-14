@@ -6,12 +6,12 @@
 // version: 0.0.1
 // license:  MIT 
 // homepage: http://github.com/mateusmcg/angular-table-restful
-(function() {
+(function () {
     'use strict';
 
     var ColumnConfiguration, PageSequence, PaginatedSetup, ScopeConfigWrapper, Setup, StandardSetup, Table, TableConfiguration, emptyTableTemplate, paginationTemplate, paginationTemplateScroll,
         __hasProp = {}.hasOwnProperty,
-        __extends = function(child, parent) {
+        __extends = function (child, parent) {
             for (var key in parent) {
                 if (__hasProp.call(parent, key)) {
                     child[key] = parent[key];

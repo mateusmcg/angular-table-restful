@@ -1,8 +1,8 @@
-    angular.module("angular-table").directive("atTable", ["$filter", '$q', '$rootScope', '$compile', 'atTableConfig', function($filter, $q, $rootScope, $compile, atTableConfig) {
+    angular.module("angular-table").directive("atTable", ["$filter", '$q', '$rootScope', '$compile', 'atTableConfig', function ($filter, $q, $rootScope, $compile, atTableConfig) {
         return {
             restrict: "AC",
             scope: true,
-            compile: function(element, attributes, transclude) {
+            compile: function (element, attributes, transclude) {
                 var table, tc;
 
                 var trElement = angular.element(element.find('tbody').find('tr'));
@@ -19,10 +19,10 @@
                 table = new Table(element, tc, atTableConfig);
                 table.compile();
                 return {
-                    post: function($scope, $element, $attributes) {
+                    post: function ($scope, $element, $attributes) {
                         table.post($scope, $element, $attributes, $filter, $q, $rootScope, atTableConfig);
 
-                        $scope.markSelected = function(item) {
+                        $scope.markSelected = function (item) {
                             if (this.atConfig.selectedItem !== item) {
                                 this.atConfig.selectedItem = item;
                                 return;
@@ -55,12 +55,12 @@
 
                             //// destroy
                             //// se escopo destruido remove elementos
-                            $scope.$on('$destroy', function(ev) {
+                            $scope.$on('$destroy', function (ev) {
                                 destroy();
                             });
 
                             //// se a table for destruida remove demais elementos
-                            $element.on('$destroy', function(ev) {
+                            $element.on('$destroy', function (ev) {
                                 destroy();
                             });
                         }
@@ -70,10 +70,10 @@
         };
     }]);
 
-    angular.module("angular-table").directive("atAttribute", [function() {
+    angular.module("angular-table").directive("atAttribute", [function () {
         return {
             restrict: "A",
-            compile: function(element, attributes, transclude) {
+            compile: function (element, attributes, transclude) {
                 var attribute;
                 attribute = element.attr("at-attribute");
                 if (!attribute) {
