@@ -51,7 +51,8 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
   1. [atEllipsis](#atellipsis)
   1. [atLoadOnStartup](#atloadonstartup)
   1. [atPagesToShow](#atpagestoshow)  
-  1. [Example](#example)  
+  1. [InMemory Example](#inmemoryexample)
+  1. [API Example](#apiexample)
 
 #### atTable
 
@@ -130,10 +131,9 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
 <table at-pages-to-show="10">
 ```
    
-#### Example:
+#### InMemory Example:
 
-   - InMemory data:
-    All you need to do here is pass the data and the grid will be ready to go with all the items loaded.
+   - All you need to do here is pass the data and the grid will be ready to go with all the items loaded.
 
     + View
     ```html
@@ -164,70 +164,111 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
         }]);
     ```
 
-   - API Pagination:
+#### API Example
    
-    + View
-    ```html
-        <table at-table="vm.myTableConfig" at-paginated>
-            <tbody>
-                <tr>    
-                    <td at-sortable at-attribute="index" at-title="Index"></td>
-                    <td at-sortable at-attribute="name" at-title="Name"></td>
-                    <td at-sortable at-attribute="email" at-title="Email"></td>
-                </tr>
-            </tbody>
-        </table>
-    ```
+  - View
+  ```html
+      <table at-table="vm.myTableConfig" at-paginated>
+          <tbody>
+              <tr>    
+                  <td at-sortable at-attribute="index" at-title="Index"></td>
+                  <td at-sortable at-attribute="name" at-title="Name"></td>
+                  <td at-sortable at-attribute="email" at-title="Email"></td>
+              </tr>
+          </tbody>
+      </table>
+  ```
+  
+  - Controller
+  ```javascript
+      angular.module("angular-table-restful-example")
+      .controller("basicExampleCtrl", ['$http', function($http) {
+          var vm = this;
+
+          vm.myTableConfig = {
+              changeEvent: tableChangeEvt
+          };
+
+          function tableChangeEvt(pageInfo, deferred) {
+              var page = 'page' + pageInfo.pageNo + '.json';
+
+              $http.get('api/' + page).then(function(successData){
+                  deferred.resolve(successData.data);
+              }, function(errorData){
+                  alert('Something went wrong with the API call :(');
+              });
+          }            
+
+      }]);
+  ```
+  
+      + ```vm.myTableConfig``` must have a changeEvent function that will be triggered for the API Pagination to work.
     
-    + Controller
-        * ```vm.myTableConfig``` must have a changeEvent function that will be triggered for the API Pagination to work.
-        * At the success callBack from the API call you need to treat the data, because the angular-table-restful expects to receive an Array with two more attribute (totalCount and pageNo). The ```prepareData ```function shows how to handle the data properly. Keep in mind that this treatment should be done by an [interceptor](https://docs.angularjs.org/api/ng/service/$http).
-        * Also you can access a lot of the table's functionalities from your controller through the ```vm.myTableConfig``` because the angular-table-restful injects methods and attributes to it, making data manipulation easy. e.g.:
-            - clearData -> Function to clear all table items.
-            - hasData -> Function that verifies if the table has items.
-            - refresh -> Function that updates the table and goes back to 1st page (triggers the changeEvent).
-            - refreshAndKeepCurrentPage -> Same as refresh but the table stays at the current page.
-            - refreshAndGoToLastPage -> Same as refresh but the table goes to the last page.
-            - predicates -> List of all the current predicates of the table.
-            - sortList -> List of all columns that are sorting the table.
-            - currentPage -> Attribute that has the currentPage of the table
-            
-            - There are some other functionalities that will be useful to you when using the table but the most important are listed above.
-        
-    ```javascript
-        angular.module("angular-table-restful-example")
-        .controller("basicExampleCtrl", ['$http', function($http) {
-            var vm = this;
+      + Also you can access a lot of the table's functionalities from your controller through the ```vm.myTableConfig``` because the angular-table-restful injects methods and attributes to it, making data manipulation easy. e.g.:
+          * clearData -> Function to clear all table items.
+          * hasData -> Function that verifies if the table has items.
+          * refresh -> Function that updates the table and goes back to 1st page (triggers the changeEvent).
+          * refreshAndKeepCurrentPage -> Same as refresh but the table stays at the current page.
+          * refreshAndGoToLastPage -> Same as refresh but the table goes to the last page.
+          * predicates -> List of all the current predicates of the table.
+          * sortList -> List of all columns that are sorting the table.
+          * currentPage -> Attribute that has the currentPage of the table
+          * prepareData -> Its a function that treats the data. Beacuse the table needs to receive an array with the items and two properties(pageNo and totalCount). You must do this treatment otherwise the table won't work properly. The default function will convert an object with an array and those two properties into an array with the same properties. You can overwrite this function and do your own treatment.
 
-            vm.myTableConfig = {
-                changeEvent: tableChangeEvt
-            };
+          * In case you have a checkbox column you'll need to set two properties in order for the checked items to be saved throughout pagination and for this feature to work ((Angular filter)[https://docs.angularjs.org/api/ng/filter/filter]: 
+          ```javascript
+          vm.myTableConfig = {
+              ...
+              //The 'Primary Key' for your table. Put in here the property that will identify each item.
+              checkedKey: function() {
+                  return "id";
+              },
+              //How the table will know that an item is checked? Put here a filter that will tell it that.
+              //It can be a string/object/function. See the doc above for 'Angular filter'.
+              checkedFilter: function() {
+                  return {
+                      selected: true
+                  };
+              }
+              ...
+          };
+          ```
+          
+          * checkAllItems(bool): For the checkbox header that will check the entire page use this function (param 'bool' should be true to check all and false for uncheck all). But for it to work, you'll need to set one property into your config. It receives each table item at a time and if should check it or not(It is called from checkAllItems).
 
-            function tableChangeEvt(pageInfo, deferred) {
-                var page = 'page' + pageInfo.pageNo + '.json';
+          Usage Example:
 
-                $http.get('api/' + page).then(function(successData){
-                    var data = prepareData(successData.data);
-                    deferred.resolve(data);
-                }, function(errorData){
-                    alert('Something went wrong with the API call :(');
-                });
-            }
+          ```html
+          <table at-table="vm.myTableConfig" at-paginated>
+          <thead>
+              <tr>
+                  <th at-attribute="Select" class="text-center">
+                      <input type="checkbox" ng-model="vm.allChecked" ng-change="vm.checkboxChange()"/>
+                  </th>
+          </thead>
+          <tbody>
+            <tr>
+                <td at-attribute="Select" class="text-center">
+                    <input type="checkbox" ng-model="item.selected" />
+                </td>
+            </tr>
+          </tbody>
+          ```
 
-              //This function could be an interceptor, just treat the API result
-            function prepareData(data){
-                var extractedData = [];
+          ```javascript
+          vm.myTableConfig = {
+              ...
+              checkItem: function(obj, bool) {
+                  obj.selected = bool;
+              }
+              ...
+          };
 
-                extractedData = data.pageItems;
+          //When the 'checkAll' checkbox gets triggered.
+          vm.checkboxChange = function checkboxChange() {
+              //This function will trigger the 'checkItem' function for each item in the currentPage checking or unchecking them all.
+              vm.myTableConfig.checkAllItems(vm.allChecked);
+          }
+          ```
 
-                //totalCount -> Total count of all items (e.g.: 3 pages with 5 items each, totalCount: 15).
-                extractedData.totalCount = data.totalCount;
-
-                //pageNo -> The page that the API will retreive (same value that the pageInfo.pageNo has).
-                extractedData.pageNo = data.pageNo;
-
-                return extractedData;
-            }
-
-        }]);
-    ```
+          * There are some other functionalities that will be useful to you when using the table but the most important are listed above.
