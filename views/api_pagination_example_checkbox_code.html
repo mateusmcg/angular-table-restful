@@ -1,6 +1,6 @@
 <h4>HTML</h4>
 
-<h3>Table</h3>
+<h2>Table</h2>
 <article class="markdown-body"><div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">table</span> <span class="pl-e">at-table</span>=<span class="pl-s"><span class="pl-pds">"</span>vm.myTableConfig <span class="pl-pds">"</span></span> <span class="pl-e">at-paginated</span>=<span class="pl-s"><span class="pl-pds">"</span>5<span class="pl-pds">"</span></span>&gt;
     &lt;<span class="pl-ent">thead</span>&gt;
         &lt;<span class="pl-ent">tr</span>&gt;
@@ -17,10 +17,10 @@
 &lt;/<span class="pl-ent">table</span>&gt;</pre></div>
 </article>
 
-<h3>List data</h3>
+<h2>List data</h2>
 • You can use 'vm.myTableConfig.getCheckedItems()' function to retrieve all checked items.
 
-<article class="markdown-body"><div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-12<span class="pl-pds">"</span></span> <span class="pl-e">ng-repeat</span>=<span class="pl-s"><span class="pl-pds">"</span>checkedItem in vm.myTableConfig.getCheckedItems()<span class="pl-pds">"</span></span>&gt;
+<article class="markdown-body"><div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>col-md-12<span class="pl-pds">"</span></span> <span class="pl-e">ng-repeat</span>=<span class="pl-s"><span class="pl-pds">"</span>checkedItem in vm.myTableConfig.getCheckedItems()<span class="pl-pds">"</span></span> <span class="pl-e">ng-non-bindable</span>&gt;
     {{checkedItem | json}}
 &lt;/<span class="pl-ent">div</span>&gt;</pre></div>
 </article>
