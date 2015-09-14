@@ -6,6 +6,7 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
   vm.hasData = hasData;
   vm.checkboxChange = checkboxChange;
   vm.getCheckedItems = getCheckedItems;
+  vm.selectedItemList = [];
 
   //Keep in mind that without the 'changeEvent' function, the API Pagination will NOT work.
   vm.myTableConfig = {
