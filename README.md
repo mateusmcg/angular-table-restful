@@ -180,7 +180,8 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
   ```
   
   - Controller
-  ```javascript
+
+    ```javascript
       angular.module("angular-table-restful-example")
       .controller("basicExampleCtrl", ['$http', function($http) {
           var vm = this;
@@ -200,7 +201,8 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
           }            
 
       }]);
-  ```
+    ```
+
       + ```vm.myTableConfig``` must have a changeEvent function that will be triggered for the API Pagination to work.
     
       + Also you can access a lot of the table's functionalities from your controller through the ```vm.myTableConfig``` because the angular-table-restful injects methods and attributes to it, making data manipulation easy. e.g.:
@@ -213,7 +215,7 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
           * sortList -> List of all columns that are sorting the table.
           * currentPage -> Attribute that has the currentPage of the table
           * prepareData -> Its a function that treats the data. Beacuse the table needs to receive an array with the items and two properties(pageNo and totalCount). You must do this treatment otherwise the table won't work properly. The default function will convert an object with an array and those two properties into an array with the same properties. You can overwrite this function and do your own treatment.
-          * In case you have a checkbox column you'll need to set two properties in order for the checked items to be saved throughout pagination and for this feature to work ((Angular filter)[https://docs.angularjs.org/api/ng/filter/filter]: 
+          * In case you have a checkbox column you'll need to set two properties in order for the checked items to be saved throughout pagination and for this feature to work ([Angular filter](https://docs.angularjs.org/api/ng/filter/filter)): 
 
           ```javascript
           vm.myTableConfig = {
@@ -233,7 +235,7 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
           };
           ```
 
-          * checkAllItems(bool): For the checkbox header that will check the entire page use this function (param 'bool' should be true to check all and false for uncheck all). But for it to work, you'll need to set one property into your config. It receives each table item at a time and if should check it or not(It is called from checkAllItems).
+          * checkAllItems(bool) -> For the checkbox header that will check the entire page use this function (param 'bool' should be true to check and false for uncheck all). But for it to work, you'll need to set one property into your config. It receives each table item at a time and if should check it or not(It is called from checkAllItems).
           
           Usage Example:
           
@@ -262,6 +264,8 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
           vm.myTableConfig = {
               ...
               checkItem: function(obj, bool) {
+                  //obj -> the item to be checked/unchecked.
+                  //Do what you need here to check/uncheck them in your way.
                   obj.selected = bool;
               }
               ...
