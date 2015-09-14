@@ -52,7 +52,7 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
   1. [atLoadOnStartup](#atloadonstartup)
   1. [atPagesToShow](#atpagestoshow)  
   1. [InMemory Example](#inmemory-example)
-  1. [API Example](#api-example)
+  1. [API Pagination Example](#api-pagination-example)
 
 #### atTable
 
@@ -164,7 +164,7 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
         }]);
     ```
 
-#### API Example
+#### API Pagination Example
    
   - View
   ```html
