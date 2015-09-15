@@ -421,9 +421,9 @@
             }
         };
 
-        TableConfiguration.prototype.extractWidth = function (classes) {
+        TableConfiguration.prototype.extractWidth = function (prop) {
             var width;
-            width = /([0-9]+px)/i.exec(classes);
+            width = /([0-9]+px)/i.exec(prop);
             if (width) {
                 return width[0];
             } else {
@@ -487,7 +487,7 @@
                 attribute = td.attr("at-attribute");
                 title = td.attr("at-title") || this.capitaliseFirstLetter(td.attr("at-attribute"));
                 sortable = td.attr("at-sortable") !== void 0 || this.isSortable(td.attr("class"));
-                width = this.extractWidth(td.attr("class"));
+                width = this.extractWidth(td.attr("width") ? td.attr("width") : td.attr("class"));
                 initialSorting = this.getInitialSorting(td);
                 bodyDefinition.push({
                     attribute: attribute,
@@ -547,7 +547,7 @@
 
         PaginatedSetup.prototype.link = function ($scope, $element, $attributes, $filter, $q, $rootScope, atTableConfig) {
 
-            var getFillerArray, getSortedAndPaginatedList, update, w, keepInBounds;
+            var getFillerArray, getSortedAndPaginatedList, update, w, keepInBounds, updateCheckAll;
 
             w = new ScopeConfigWrapper($scope, $attributes.atTable, $attributes.atPaginated, $attributes.atPagesToShow, $q, $rootScope, $filter, atTableConfig);
 
@@ -606,21 +606,40 @@
                 if (w.getItemsPerPage()) {
                     var newNumberOfPages, numberOfPagesToShow, totalCount;
                     totalCount = w.getTotalCount();
+                    var currentPage;
                     if (totalCount > 0) {
                         newNumberOfPages = Math.ceil(totalCount / w.getItemsPerPage());
                         numberOfPagesToShow = newNumberOfPages >= w.getNumberOfPagesToShow() ? w.getNumberOfPagesToShow() : newNumberOfPages;
                         w.setNumberOfPages(newNumberOfPages);
                         $scope.pageSequence.resetParameters(0, newNumberOfPages, numberOfPagesToShow);
                         w.setCurrentPage(keepInBounds(w.getCurrentPage(), 0, w.getNumberOfPages() - 1));
-                        return $scope.pageSequence.realignGreedy(w.getCurrentPage());
+                        currentPage = w.getCurrentPage();
                     } else {
                         w.setNumberOfPages(1);
                         $scope.pageSequence.resetParameters(0, 1, 1);
                         w.setCurrentPage(0);
-                        return $scope.pageSequence.realignGreedy(0);
+                        currentPage = 0;
+                    }
+
+                    $rootScope.$broadcast('Angular-Table-Restful.TableUpdated', w.atConfig);
+                    return $scope.pageSequence.realignGreedy(currentPage);
+                }
+
+                $rootScope.$broadcast('Angular-Table-Restful.TableUpdated', w.atConfig);
+            };
+
+            updateCheckAll = function (newList) {
+                if ($scope.hasCheck) {
+                    var checkHeader = angular.element('th > input[type=checkbox]');
+                    var filter = $scope.atConfig.checkedFilter();
+                    var checkedItems = $filter('filter')(newList, filter);
+                    if (checkedItems.length == newList.length) {
+                        checkHeader.prop('checked', true);
+                    } else {
+                        checkHeader.prop('checked', false);
                     }
                 }
-            };
+            }
 
             $scope.isInitialized = function () {
                 return !angular.isUndefined(w.getList()) && !angular.isUndefined(w.getTotalCount());
@@ -785,17 +804,29 @@
             if ($scope.isMemory) {
                 $scope.$watchCollection($attributes.atTable, function (newValue, oldValue) {
                     if (newValue !== oldValue) {
+                        updateCheckAll(newValue);
                         update();
                     }
                 });
+
+                // The watchCollection and the watch are necessary to distinguish between the elements of the 
+                // table changing completely (as in reloading the table, or changing page) from smaller changes (e.g.: an item being checked)
+                // The first will easily fall on the watchCollection, and the second below. In the second case we don't want to 
+                // trigger the update function, but you may need the event broadcasted
+                $scope.$watch($attributes.atTable, function (newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        $rootScope.$broadcast('Angular-Table-Restful.ListChanged', w.atConfig);
+                    }
+                }, true);
             }
 
             if (!$scope.isMemory) {
-                $scope.$watchCollection('listData', function (newValue, oldValue) {
+                $scope.$watch('listData', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
+                        updateCheckAll(newValue);
                         update();
                     }
-                });
+                }, true);
 
                 // If attr 'at-load-on-startup' or atConfig.loadOnStartup are defined
                 // Invoke changeEvent func to load first page
