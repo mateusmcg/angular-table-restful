@@ -53,6 +53,7 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
   1. [atPagesToShow](#atpagestoshow)  
   1. [InMemory Example](#inmemory-example)
   1. [API Pagination Example](#api-pagination-example)
+  1. [Events](#events)
 
 #### atTable
 
@@ -206,6 +207,7 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
       + ```vm.myTableConfig``` must have a changeEvent function that will be triggered for the API Pagination to work.
     
       + Also you can access a lot of the table's functionalities from your controller through the ```vm.myTableConfig``` because the angular-table-restful injects methods and attributes to it, making data manipulation easy. e.g.:
+          * getList -> Function that returns the elements currently displayd on screen
           * clearData -> Function to clear all table items.
           * hasData -> Function that verifies if the table has items.
           * refresh -> Function that updates the table and goes back to 1st page (triggers the changeEvent).
@@ -280,4 +282,34 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
           }
           ```
 
-          * There are some other functionalities that will be useful to you when using the table but the most important are listed above.
+#### Events
+   
+   The angular-table also broadcasts two events, always passing the config object as the argument (the same on "vm.myTableConfig" for API paginated tables). With this object you can check many properties and values on the table (e.g.: the list of elemets currently displayed or the selected page), and take any action you feel necessary. The two events are:
+
+  - ListChanged - 'Angular-Table-Restful.ListChanged'
+    + It fully watches every element in the list, and emits this event when something from outside changed any value in any element of the list. That can be caused by user interaction, your controller, etc. It is used only when the table is working "in memory" (not using API pagination), because otherwise the list is not exposed to be changed at all.
+  
+  - TableUpdated - 'Angular-Table-Restful.TableUpdated'
+    + Emitted whenever the table is updated, that can be when the page changes, the list is ordered in someway, or even when an item is "checked" (for this last case, the event is only emitted when the table is paginated through API). 
+
+  - Example:
+
+```javascript
+angular.module("angular-table-restful-example")
+    .controller("eventsExampleCtrl", ['$scope', function($scope) {
+      var vm = this;
+      //...
+
+      $scope.$on('Angular-Table-Restful.TableUpdated', tableChanged);
+      $scope.$on('Angular-Table-Restful.ListChanged', tableChanged);
+
+      function tableChanged(e, atConfig) {
+          var list = atConfig.getList();
+          var currentPage = atConfig.currentPage;
+          //....
+          // Do many wonderful things
+          //...
+      }
+//...
+}]);
+```
