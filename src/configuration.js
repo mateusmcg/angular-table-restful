@@ -505,7 +505,7 @@
 
         PaginatedSetup.prototype.link = function ($scope, $element, $attributes, $filter, $q, $rootScope, atTableConfig) {
 
-            var getFillerArray, getSortedAndPaginatedList, update, w, keepInBounds, updateCheckAll;
+            var getFillerArray, getSortedAndPaginatedList, update, w, keepInBounds;
 
             w = new ScopeConfigWrapper($scope, $attributes.atTable, $attributes.atPaginated, $attributes.atPagesToShow, $q, $rootScope, $filter, atTableConfig);
 
@@ -585,19 +585,6 @@
 
                 $rootScope.$broadcast('Angular-Table-Restful.TableUpdated', w.atConfig);
             };
-
-            updateCheckAll = function (newList) {
-                if ($scope.hasCheck) {
-                    var checkHeader = angular.element('th > input[type=checkbox]');
-                    var filter = $scope.atConfig.checkedFilter();
-                    var checkedItems = $filter('filter')(newList, filter);
-                    if (checkedItems.length == newList.length) {
-                        checkHeader.prop('checked', true);
-                    } else {
-                        checkHeader.prop('checked', false);
-                    }
-                }
-            }
 
             $scope.isInitialized = function () {
                 return !angular.isUndefined(w.getList()) && !angular.isUndefined(w.getTotalCount());
@@ -762,7 +749,6 @@
             if ($scope.isMemory) {
                 $scope.$watchCollection($attributes.atTable, function (newValue, oldValue) {
                     if (newValue !== oldValue) {
-                        updateCheckAll(newValue);
                         update();
                     }
                 });
@@ -781,7 +767,6 @@
             if (!$scope.isMemory) {
                 $scope.$watch('listData', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
-                        updateCheckAll(newValue);
                         update();
                     }
                 }, true);
