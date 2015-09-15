@@ -12,58 +12,57 @@
   <p>The only thing that you need for the API Pagination to work is the 'vm.myTableConfig' object along with the 'changeEvent' function. All the other things are up to you and are shown here for example purpose.</p>
   <p>Check out the 'vm.myTableConfig' object at the console log for more details.</p>
 </div>
-<article class="markdown-body"><div class="highlight highlight-source-js"><pre><code class="javascript">    angular.module(&quot;angular-table-restful-example&quot;).controller(&quot;apiCtrl&quot;, [&quot;$http&quot;, &quot;$scope&quot;, function($http, $scope) {
-  var vm = this;
+<article class="markdown-body"><div class="highlight highlight-source-js"><pre>angular.module(<span class="pl-s"><span class="pl-pds">"</span>angular-table-restful-example<span class="pl-pds">"</span></span>).controller(<span class="pl-s"><span class="pl-pds">"</span>apiCtrl<span class="pl-pds">"</span></span>, [<span class="pl-s"><span class="pl-pds">"</span>$http<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">$http</span>) {
+  <span class="pl-k">var</span> vm <span class="pl-k">=</span> <span class="pl-v">this</span>;
 
-  vm.clear = clear;
-  vm.refresh = refresh;
-  vm.hasData = hasData;
+  vm.<span class="pl-c1">clear</span> <span class="pl-k">=</span> clear;
+  vm.refresh <span class="pl-k">=</span> refresh;
+  vm.hasData <span class="pl-k">=</span> hasData;
 
-  //Keep in mind that without the 'changeEvent' function, the API Pagination will NOT work.
-  vm.myTableConfig = {
-    changeEvent: tableChangeEvt,
-    loadOnStartup: true //Responsible to load the table when page loads.
+  <span class="pl-c">//Keep in mind that without the 'changeEvent' function, the API Pagination will NOT work.</span>
+  vm.myTableConfig <span class="pl-k">=</span> {
+    changeEvent<span class="pl-k">:</span> tableChangeEvt,
+    loadOnStartup<span class="pl-k">:</span> <span class="pl-c1">true</span> <span class="pl-c">//Responsible to load the table when page loads.</span>
   };
 
-  $scope.$on('Angular-Table-Restful.TableUpdated', tableChanged);
-  $scope.$on('Angular-Table-Restful.ListChanged', tableChanged);
+  $scope.$on(<span class="pl-s"><span class="pl-pds">'</span>Angular-Table-Restful.TableUpdated<span class="pl-pds">'</span></span>, tableChanged);
+  $scope.$on(<span class="pl-s"><span class="pl-pds">'</span>Angular-Table-Restful.ListChanged<span class="pl-pds">'</span></span>, tableChanged);
 
-  function tableChanged(e, atConfig) {
-      var list = atConfig.getList();
-      var currentPage = atConfig.currentPage;
-      //....
-      // Do many wonderful things everytime the table is changed
-      //...
+  <span class="pl-k">function</span> <span class="pl-en">tableChanged</span>(<span class="pl-smi">e</span>, <span class="pl-smi">atConfig</span>) {
+      <span class="pl-k">var</span> list = atConfig.getList();
+      <span class="pl-k">var</span> currentPage = atConfig.currentPage;
+       <span class="pl-c">//....</span>
+       <span class="pl-c">// Do many wonderful things</span>
+       <span class="pl-c">//...</span>
   }
 
-  function tableChangeEvt(pageInfo, deferred) {
-    //Take a look at it and see the functionalities that you can use.
-    console.log('vm.myTableConfig', vm.myTableConfig);
+  <span class="pl-k">function</span> <span class="pl-en">tableChangeEvt</span>(<span class="pl-smi">pageInfo</span>, <span class="pl-smi">deferred</span>) {
+    <span class="pl-c">//Take a look at it and see the functionalities that you can use.</span>
+    <span class="pl-en">console</span><span class="pl-c1">.log</span>(<span class="pl-s"><span class="pl-pds">'</span>vm.myTableConfig<span class="pl-pds">'</span></span>, vm.myTableConfig);
 
-    var page = 'page' + pageInfo.pageNo + '.json';
+    <span class="pl-k">var</span> page <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>page<span class="pl-pds">'</span></span> <span class="pl-k">+</span> pageInfo.pageNo <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>.json<span class="pl-pds">'</span></span>;
 
-    $http.get('api/' + page).then(function(successData){
-      vm.apiError = false;      
-      deferred.resolve(successData.data);
-    }, function(errorData){
-      vm.apiError = true;
+    $http.get(<span class="pl-s"><span class="pl-pds">'</span>api/<span class="pl-pds">'</span></span> <span class="pl-k">+</span> page).then(<span class="pl-k">function</span>(<span class="pl-smi">successData</span>){
+      vm.apiError <span class="pl-k">=</span> <span class="pl-c1">false</span>;      
+      deferred.resolve(successData.<span class="pl-c1">data</span>);
+    }, <span class="pl-k">function</span>(<span class="pl-smi">errorData</span>){
+      vm.apiError <span class="pl-k">=</span> <span class="pl-c1">true</span>;
     });
   }
 
-  //These are some examples of functionalities that you can use.
-  //For a full view check out the 'vm.myTableConfig' object at the console log or the docs.
-  function refresh(){
+  <span class="pl-c">//These are some examples of functionalities that you can use.</span>
+  <span class="pl-c">//For a full view check out the 'vm.myTableConfig' object at the console log or the docs.</span>
+  <span class="pl-k">function</span> <span class="pl-en">refresh</span>(){
     vm.myTableConfig.refresh();
   }
 
-  function clear(){
+  <span class="pl-k">function</span> <span class="pl-en">clear</span>(){
     vm.myTableConfig.clearData(); 
   }
 
-  function hasData(){
-    return vm.myTableConfig.hasData(); 
+  <span class="pl-k">function</span> <span class="pl-en">hasData</span>(){
+    <span class="pl-k">return</span> vm.myTableConfig.hasData(); 
   }
 
-}])
-</code></pre></div>
+}])</pre></div>
 </article>
