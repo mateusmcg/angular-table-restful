@@ -505,7 +505,7 @@
 
         PaginatedSetup.prototype.link = function ($scope, $element, $attributes, $filter, $q, $rootScope, atTableConfig) {
 
-            var getFillerArray, getSortedAndPaginatedList, update, w, keepInBounds;
+            var getFillerArray, getSortedAndPaginatedList, update, w, keepInBounds, updateCheckAll;
 
             w = new ScopeConfigWrapper($scope, $attributes.atTable, $attributes.atPaginated, $attributes.atPagesToShow, $q, $rootScope, $filter, atTableConfig);
 
@@ -585,6 +585,19 @@
 
                 $rootScope.$broadcast('Angular-Table-Restful.TableUpdated', w.atConfig);
             };
+
+            updateCheckAll = function (newList) {
+                if ($scope.hasCheck) {
+                    var checkHeader = angular.element('th > input[type=checkbox]');
+                    var filter = $scope.atConfig.checkedFilter();
+                    var checkedItems = $filter('filter')(newList, filter);
+                    if (checkedItems.length == newList.length) {
+                        checkHeader.prop('checked', true);
+                    } else {
+                        checkHeader.prop('checked', false);
+                    }
+                }
+            }
 
             $scope.isInitialized = function () {
                 return !angular.isUndefined(w.getList()) && !angular.isUndefined(w.getTotalCount());
@@ -749,6 +762,7 @@
             if ($scope.isMemory) {
                 $scope.$watchCollection($attributes.atTable, function (newValue, oldValue) {
                     if (newValue !== oldValue) {
+                        updateCheckAll(newValue);
                         update();
                     }
                 });
@@ -757,7 +771,7 @@
                 // table changing completely (as in reloading the table, or changing page) from smaller changes (e.g.: an item being checked)
                 // The first will easily fall on the watchCollection, and the second below. In the second case we don't want to 
                 // trigger the update function, but you may need the event broadcasted
-                $scope.$watch($attributes.atTable, function(newValue, oldValue){
+                $scope.$watch($attributes.atTable, function (newValue, oldValue) {
                     if (newValue !== oldValue) {
                         $rootScope.$broadcast('Angular-Table-Restful.ListChanged', w.atConfig);
                     }
@@ -767,6 +781,7 @@
             if (!$scope.isMemory) {
                 $scope.$watch('listData', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
+                        updateCheckAll(newValue);
                         update();
                     }
                 }, true);
