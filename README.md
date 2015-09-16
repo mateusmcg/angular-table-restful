@@ -241,6 +241,19 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
 
           * checkAllItems(bool) -> For the checkbox header that will check the entire page use this function (param 'bool' should be true to check and false for uncheck all). But for it to work, you'll need to set one property into your config. It receives each table item at a time and if should check it or not(It is called from checkAllItems).
           
+          * You can also pass a function on the "onAllChecked" property, this function will be called whenever all the items in the current page get "checked" or, if they are already all "checked", when one of them is "un-checked", and a boolean is passed as a parameters to reflect this. You can use that to keep a master checkbox (one with the function of "Check All") in sync with the page items. Example:
+
+          ```javascript
+            vm.myTableConfig = {
+              ...
+              onAllChecked: function(bool) {
+                //All items are "checked" (bool = true) or they just lost this status (bool = false)
+                vm.myMasterCheckboxModel = bool;
+              }
+              ...
+          };
+          ```
+
           Usage Example:
           
           View
