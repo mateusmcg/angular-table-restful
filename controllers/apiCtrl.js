@@ -25,7 +25,7 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
     checkItem: function(obj, bool) {
         obj.selected = bool;
     },
-    onAllchecked: function(bool) {
+    onAllChecked: function(bool) {
       vm.allChecked = bool;
     }
   };
