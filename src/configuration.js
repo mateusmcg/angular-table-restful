@@ -165,7 +165,7 @@
                 },
                 clearData: function() {
                     scope.$eval($this.atConfig.listName + '=list', {
-                        list: null
+                        list: []
                     });
                 },
                 getList: function() {
