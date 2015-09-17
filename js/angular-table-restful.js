@@ -13,7 +13,7 @@
 (function() {
     'use strict';
 
-    var ColumnConfiguration, PageSequence, PaginatedSetup, ScopeConfigWrapper, Setup, Table, TableConfiguration, emptyTableTemplate, paginationTemplate, paginationTemplateScroll,
+    var ColumnConfiguration, PageSequence, PaginatedSetup, ScopeConfigWrapper, Setup, Table, TableConfiguration, emptyTableDefaultTemplate, paginationTemplate, paginationTemplateScroll,
         __hasProp = {}.hasOwnProperty,
         __extends = function(child, parent) {
             for (var key in parent) {
@@ -31,13 +31,14 @@
             return child;
         };
 
-    emptyTableTemplate = '<tr ng-show="isEmpty()"><td colspan="100%"><strong class="text-warning"><i18n>Nenhum item encontrado.</i18n></strong></td></tr>';
+    emptyTableDefaultTemplate = '<tr ng-show="isEmpty()"><td colspan="100%"><strong class="text-warning"><i18n>No item found.</i18n></strong></td></tr>';
     paginationTemplateScroll = "<div ng-show='isInitialized() && !isEmpty() && getNumberOfPages() > 1' style='margin: 0px;margin-top:10px;'><ul class='pagination'><li ng-class='{disabled: getCurrentPage() <= 0}'><a href='' ng-click='firstPage()'>&lsaquo;</a></li><li ng-if='pageSequence.data[0] > 0'><a href='' ng-click='stepPage(-atConfig.numberOfPages)'>1</a></li><li ng-if='pageSequence.data[0] > 0'><a href='' ng-click='stepPage(-(pageSequence.data.indexOf(getCurrentPage()) + atConfig.numberOfPagesToShow))'>&hellip;</a></li><li ng-class='{active: getCurrentPage() == page}' ng-repeat='page in pageSequence.data'><a href='' ng-click='goToPage(page)'>{{page + 1}}</a></li><li ng-if='pageSequence.data[pageSequence.data.length -1] < getNumberOfPages() - 1'><a href='' ng-click='stepPage(atConfig.numberOfPagesToShow - pageSequence.data.indexOf(getCurrentPage()))'>&hellip;</a></li><li ng-if='pageSequence.data[pageSequence.data.length -1] < getNumberOfPages() - 1'><a href='' ng-click='stepPage(getNumberOfPages())'>{{getNumberOfPages()}}</a></li><li ng-class='{disabled: getCurrentPage() >= getNumberOfPages() - 1}'><a href='' ng-click='stepPage(1)'>&rsaquo;</a></li></ul></div>";
     paginationTemplate = "<tr ng-show='isInitialized() && !isEmpty() && getNumberOfPages() > 1' class='at-pagination'><td colspan='100%'>" + paginationTemplateScroll + "</td></tr>";
 
     angular.module("angular-table", []).constant('atTableConfig', {
         i18nDirective: '',
-        defaultPageSize: 10
+        defaultPageSize: 10,
+        emptyTableTemplate: ''
     });
     
     ColumnConfiguration = (function() {
@@ -206,8 +207,15 @@
                     return $this.getList() ? $this.getList().length > 0 : false;
                 },
                 clearData: function() {
-                    scope.$eval($this.atConfig.listName + '=list', {
-                        list: []
+                    var list = [];
+                    list.totalCount = 0;
+                    scope.$eval($this.atConfig.listName + '=value', {
+                        value: list
+                    });
+                },
+                clearTable: function() {
+                    scope.$eval($this.atConfig.listName + '=value', {
+                        value: null
                     });
                 },
                 getList: function() {
@@ -642,7 +650,7 @@
                         var checkedItems = $filter('filter')(currentPage, w.atConfig.checkedFilter());
 
                         // nextStatus => true when all items in the page are checked; false if at least one item is not;
-                        var nextStatus = (checkedItems.length === currentPage.length);
+                        var nextStatus = (checkedItems.length === currentPage.length && checkedItems.length !== 0);
 
                         if (nextStatus !== allCheckedStatus) {
                             w.atConfig.onAllChecked(nextStatus);
@@ -903,11 +911,17 @@
                 this.element.append(tfoot);
             }
 
-            var emptyTableTemp = emptyTableTemplate;
+            var emptyTableTemp;
+
+            if (this.atTableConfig.emptyTableTemplate) {
+                emptyTableTemp = this.atTableConfig.emptyTableTemplate;
+            } else {
+                emptyTableTemp = emptyTableDefaultTemplate;
+            }
 
             // In case there is a special i18n directive to use, we replace the default(i18n).
             if (this.atTableConfig.i18nDirective) {
-                emptyTableTemp = emptyTableTemplate.replace(/i18n/g, this.atTableConfig.i18nDirective);
+                emptyTableTemp = emptyTableTemp.replace(/i18n/g, this.atTableConfig.i18nDirective);
             }
 
             // TODO Viana: ver como apresentar mensagem apenas após ajax de load for executado e permanecer sem registros
@@ -1048,7 +1062,6 @@
         return PageSequence;
 
     })();
-    
     angular.module("angular-table").directive("atTable", ["$filter", '$q', '$rootScope', '$compile', 'atTableConfig', function($filter, $q, $rootScope, $compile, atTableConfig) {
         return {
             restrict: "AC",

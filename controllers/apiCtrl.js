@@ -54,6 +54,10 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
     vm.myTableConfig.clearData(); 
   }
 
+  function clearTable() {
+    vm.myTableConfig.clearTable();
+  }
+
   function hasData() {
     return vm.myTableConfig.hasData(); 
   }
