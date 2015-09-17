@@ -2,6 +2,7 @@ angular.module("angular-table-restful-example").controller("apiCtrl", ["$http", 
   var vm = this;
 
   vm.clear = clear;
+  vm.clearTable = clearTable;
   vm.refresh = refresh;
   vm.hasData = hasData;
   vm.checkboxChange = checkboxChange;
