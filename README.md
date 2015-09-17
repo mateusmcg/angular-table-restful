@@ -208,7 +208,8 @@ A table for [AngularJs](https://angularjs.org/) with support for restful API sta
     
       + Also you can access a lot of the table's functionalities from your controller through the ```vm.myTableConfig``` because the angular-table-restful injects methods and attributes to it, making data manipulation easy. e.g.:
           * getList -> Function that returns the elements currently displayd on screen
-          * clearData -> Function to clear all table items.
+          * clearData -> Function to clear all table items, making it empty and displaying default emptyTableTemplate message.
+          * clearTable -> Function to clear all table making it's list null and not displaying any message or items, just the table's headers
           * hasData -> Function that verifies if the table has items.
           * refresh -> Function that updates the table and goes back to 1st page (triggers the changeEvent).
           * refreshAndKeepCurrentPage -> Same as refresh but the table stays at the current page.
