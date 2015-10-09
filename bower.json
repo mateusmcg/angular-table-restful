@@ -3,6 +3,13 @@
   "version": "0.0.1",
   "main": ["angular-table-restful.js", "angular-table-restful.css"],
   "homepage": "https://github.com/mateusmcg/angular-table-restful",
+  "authors": [
+    "Fábio Henrique da Silva Viana <fabioviana.bh@gmail.com>",
+    "Mateus Cerqueira <mateus_mcg@icloud.com>",
+    "Henrique Silva Brighenti <henriqueb@ciandt.com>",
+    "Bruno Camodeco dos Santos <brunocs@ciandt.com>",
+    "Tanato Cartaxo <tanatopc@gmail.com>"
+  ],
   "dependencies": {
     "angular": "~1.2.11",
     "jquery": "~2.1.4",
@@ -14,6 +21,8 @@
     "restful",
     "module",
     "api",
-    "pagination"
+    "pagination",
+    "rest",
+    "grid"
   ]
 }
